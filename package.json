@@ -1,5 +1,5 @@
 {
-  "name": "virtualtablevue",
+  "name": "virtual-table-vue",
   "version": "1.0.0",
   "description": "A virtual list view implementation with multiple columns",
   "main": "index.js",
@@ -13,8 +13,9 @@
     "url": "git+https://github.com/uriegel/VirtualTableVue.git"
   },
   "keywords": [
-    "Typescript",
-    "Vue"
+    "javascript",
+    "Vue",
+    "Vue plugin"
   ],
   "author": "Uwe Riegel",
   "license": "MIT",
