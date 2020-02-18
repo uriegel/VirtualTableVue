@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "Columns": "vue serve ./dev/ColumnTest.vue",
-    "Scrollbar": "vue serve ./dev/ScrollbarTest.vue"
+    "Scrollbar": "vue serve ./dev/ScrollbarTest.vue",
+    "TableView": "vue serve ./dev/TableViewTest.vue"
   },
   "repository": {
     "type": "git",

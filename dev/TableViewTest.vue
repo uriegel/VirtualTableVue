@@ -1,0 +1,129 @@
+<template>
+    <div class="root">
+        <h1>Table View Test</h1>
+        <div class="container">
+            <table-view :eventBus="tableEventBus" :columns='columns' :items='items' 
+                @selection-changed="onSelectionChanged">
+                <template v-slot=row >
+                    <tr :class="{ 'isCurrent': row.item.index == selectedIndex }">
+                        <td>{{row.item.name}}</td>
+                        <td>{{row.item.extension}}</td>
+                        <td>{{row.item.date}}</td>
+                        <td>{{row.item.description}}</td>
+                    </tr>
+                </template>
+            </table-view>
+        </div>
+        <div class="input">
+            <input type="number" autofocus @change="onChange" placeholder="Items count" />
+            <div>Message is: {{ totalCount }}</div>
+        </div>    
+    </div>
+</template>
+
+<script>
+import Vue from 'vue'
+import TableView from '../TableView.vue'
+
+export default Vue.extend({
+    components: {
+        TableView
+    },
+    data() {
+        return {
+            tableEventBus: new Vue(),
+            selectedIndex: 0,
+            columns: [
+                {
+                    name: "Name",
+                    isSortable: true,
+                    width: "25%"
+                }, {
+                    name: "Größe",
+                    isSortable: true,
+                    width: "35.4305%"
+                }, {
+                    name: "Datum",
+                    isSortable: true,
+                    width: "21.2687%"
+                }, {
+                    name: "Beschreibung",
+                    width: "18.3009%"
+                }
+            ],
+            items: []
+        }
+    },
+    computed: {
+        totalCount() {
+            return this.items.length
+        }
+    },
+    methods: {
+        onSelectionChanged(index) { this.selectedIndex = index },
+        onChange(evt) {
+            const count = parseInt(evt.srcElement.value)
+            this.fillItems(count)
+        },
+        fillItems(count) {
+            this.items = []
+            Array.from(Array(count).keys()).map((n, i) => {
+                return {
+                    name: `name ${i}`,
+                    extension: `extension ${i}`,
+                    date: `datum ${i}`,
+                    description: `description ${i}`,
+                    isCurrent: false,
+                    index: i
+                }
+            }).forEach((n, i) => this.items[i] = n)
+            this.tableEventBus.$emit("focus")
+        }
+    },
+    mounted() {
+        this.fillItems(500)
+        setTimeout(() => this.tableEventBus.$emit("focus"))
+    }
+})
+</script>
+
+<style>
+:root {
+    --tablevue-main-background-color: white;
+    
+    --tablevue-scrollbar-border-color: gray;
+    --tablevue-scrollbar-border-active-color: #444;
+    --tablevue-scrollbar-button-active-color: #aaa;
+    --tablevue-scrollbar-image-color: #666;
+    --tablevue-scrollbar-grip-color: rgb(209, 209, 209);
+    --tablevue-scrollbar-grip-hover-color: #bbb;
+    --tablevue-scrollbar-grip-active-color: #999;
+
+    --tablevue-selected-color:  white;
+    --tablevue-selected-background-color: blue;
+    --tablevue-columns-separator-color:  white;
+    --tablevue-selected-background-hover-color: #0063ff;
+}
+body {
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+}
+</style>  
+
+<style scoped>
+.root {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.container {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+}
+.input {
+    margin: 20px;
+}
+</style>

@@ -89,11 +89,25 @@ export default Vue.extend({
 <style>
 :root {
     --tablevue-main-background-color: white;
+    
     --tablevue-scrollbar-border-color: gray;
+    --tablevue-scrollbar-border-active-color: #444;
+    --tablevue-scrollbar-button-active-color: #aaa;
+    --tablevue-scrollbar-image-color: #666;
+    --tablevue-scrollbar-grip-color: rgb(209, 209, 209);
+    --tablevue-scrollbar-grip-hover-color: #bbb;
+    --tablevue-scrollbar-grip-active-color: #999;
+
     --tablevue-selected-color:  white;
     --tablevue-selected-background-color: blue;
     --tablevue-columns-separator-color:  white;
     --tablevue-selected-background-hover-color: #0063ff;
+}
+body {
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
 }
 </style>  
 
