@@ -88,6 +88,8 @@ export default Vue.extend({
 
 <style>
 :root {
+    --tablevue-main-background-color: white;
+    --tablevue-scrollbar-border-color: gray;
     --tablevue-selected-color:  white;
     --tablevue-selected-background-color: blue;
     --tablevue-columns-separator-color:  white;

@@ -4,7 +4,8 @@
   "description": "A virtual list view implementation with multiple columns",
   "main": "index.js",
   "scripts": {
-    "Columns": "vue serve ./dev/ColumnTest.vue"
+    "Columns": "vue serve ./dev/ColumnTest.vue",
+    "Scrollbar": "vue serve ./dev/ScrollbarTest.vue"
   },
   "repository": {
     "type": "git",
