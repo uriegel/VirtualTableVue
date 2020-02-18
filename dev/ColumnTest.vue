@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <table>
-            <!-- <columns :columns='columns' :columnsWidths='columnsWidths' @on-columns-widths-changed='onColumnsWidthChanged'></columns> -->
+            <columns :columns='columns' :columnsWidths='columnsWidths' @on-columns-widths-changed='onColumnsWidthChanged'></columns>
             <tbody>
                 <tr>
                     <td>Test</td>
@@ -25,16 +25,15 @@
 
 <script>
 import Vue from 'vue'
-// import Columns from '../controls/Columns.vue'
-// import {Column} from '../controls/Columns.vue'
+import Columns from '../Columns.vue'
 
 export default Vue.extend({
     components: {
-//        Columns        
+        Columns        
     },
     data() {
         return {
-            columns: [],// as Column[],
+            columns: [],
             columnsWidths: []
         }
     },
@@ -86,6 +85,15 @@ export default Vue.extend({
     }
 })
 </script>
+
+<style>
+:root {
+    --tablevue-selected-color:  white;
+    --tablevue-selected-background-color: blue;
+    --tablevue-columns-separator-color:  white;
+    --tablevue-selected-background-hover-color: #0063ff;
+}
+</style>  
 
 <style scoped>
     .container {
