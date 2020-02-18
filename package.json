@@ -4,7 +4,7 @@
   "description": "A virtual list view implementation with multiple columns",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "Columns": "vue serve ./dev/ColumnTest.vue"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/uriegel/VirtualTableVue/issues"
   },
-  "homepage": "https://github.com/uriegel/VirtualTableVue#readme"
+  "homepage": "https://github.com/uriegel/VirtualTableVue#readme",
+  "devDependencies": {
+    "@vue/cli": "^4.2.2",
+    "@vue/cli-service-global": "^4.2.2"
+  }
 }
