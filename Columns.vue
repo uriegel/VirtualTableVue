@@ -14,7 +14,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
     props: {
-        columns: []
+        columns: {}
     },
     watch: {
         columns: {
