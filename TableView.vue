@@ -1,7 +1,7 @@
 <template>
     <div class="tableview-root" tabindex="1" ref="list" @keydown="onKeyDown" @mousewheel="onMouseWheel">
         <table ref="table" @mousedown="onMouseDown" @dblclick='onDblClick' 
-                :class="{ 'scrollbar': items.length > itemsPerPage }">
+                :class="{ 'scrollbar': itemsSource.counth > itemsPerPage }">
             <columns :columns='columns' @onColumnHeight='onColumnHeight'
                 @on-columns-widths-changed='onColumnsWidthChanged' @on-column-click='onColumnClick'></columns>
             <tbody ref="tbody">
@@ -9,7 +9,7 @@
             </tbody>
         </table>    
         <div ref="scrollbar" class="scrollbar-container">
-            <scrollbar :totalCount="totalCount" :itemsPerPage="itemsPerPage" :parentHeight="height" 
+            <scrollbar :totalCount="itemsSource.count" :itemsPerPage="itemsPerPage" :parentHeight="height" 
                 v-bind:style="{height: height+'px'}" v-model="position">
             </scrollbar>
         </div>    
@@ -21,6 +21,17 @@ import Vue from 'vue'
 import Columns from './Columns.vue'
 import Scrollbar from './Scrollbar.vue'
 
+// export interface TableViewItem {
+//     isCurrent?: boolean
+//     // TODO index from F#
+//     index: number
+// }
+
+// export interface ItemsSource {
+//     count: number,
+//     getItems: (startRange: number, endRamge: number) => Promise<TableViewItem[]>
+// }
+
 export default Vue.extend({
 
     components: {
@@ -30,7 +41,15 @@ export default Vue.extend({
     props: {
         eventBus: { type: Object, default: () => new Vue() },
         columns: {},
-        items: {}
+        itemsSource: {
+            type: Object,
+            default: () => {
+                return { 
+                    count: 0,   
+                    getItems: async () => await []
+                }
+            }
+        }
     },
     data() {
         return {
@@ -45,14 +64,18 @@ export default Vue.extend({
         }
     },
     watch: {
-        items: {
+        itemsSource: {
             immediate: true,
-            handler() {
-                if (this.items.length)
-                    this.items[0].isCurrent = true
-                this.items.forEach((n, i) => n.index = i)                    
-                this.index = 0
+            handler(/*newVal*/) {
+                // TODO: Append mode
+                //this.index = newVal.count - 1
+
+                //this.setCurrentIndex(this.index)
+                this.setCurrentIndex(0)
+                //this.end()                
                 this.onResize()
+                // Append mode
+                // setTimeout(() => this.scrollIntoView(), 20)                
             }
         },
         position(newVal) { 
@@ -66,11 +89,6 @@ export default Vue.extend({
             }
         },
     },
-    computed: {
-        totalCount () {
-            return this.items.length
-        }
-    },
     methods: {
         focus() { this.$refs.list.focus() },
         onColumnHeight(height) { 
@@ -83,7 +101,7 @@ export default Vue.extend({
         onResize() {
             if (this.$refs.list)
                 this.height = this.$refs.list.clientHeight - this.columnHeight
-            this.itemsPerPage = Math.floor(this.height / this.itemHeight)
+            this.itemsPerPage = this.itemHeight ? Math.floor(this.height / this.itemHeight) : 1
             this.setPosition()
         },
         onKeyDown(evt) {
@@ -128,36 +146,37 @@ export default Vue.extend({
             }
         },
         onMouseWheel(evt) {
-            if (this.items.length > this.itemsPerPage) {
+            if (this.itemsSource.count > this.itemsPerPage) {
                 var delta = evt.deltaY / Math.abs(evt.deltaY) * 3
                 let newPos = this.position + delta
                 if (newPos < 0)
                     newPos = 0
-                if (newPos > this.items.length - this.itemsPerPage) {
-                    newPos = this.items.length - this.itemsPerPage
+                if (newPos > this.itemsSource.count - this.itemsPerPage) {
+                    newPos = this.itemsSource.count - this.itemsPerPage
                 }
                 this.position = newPos
             }
         },
         onDblClick() {
-            this.$emit('action', this.items[this.index])
+        //    this.$emit('action', this.items[this.index])
         },
-        setPosition() {
-            this.displayItems = this.items.slice(this.startIndex, this.startIndex + this.itemsPerPage + 1)
+        async setPosition() {
+            this.displayItems = await this.itemsSource.getItems(this.startIndex, Math.min(this.startIndex + this.itemsPerPage + 1, this.itemsSource.count))
         },
-        end() { this.setCurrentIndex(this.items.length - 1) },
+        end() { this.setCurrentIndex(this.itemsSource.count - 1) },
         pos1() { this.setCurrentIndex(0) },
         upOne() { this.setCurrentIndex(this.index - 1) },
         downOne() { this.setCurrentIndex(this.index + 1) },
         pageDown() {
-            this.setCurrentIndex(this.index < this.items.length - this.itemsPerPage + 1 ? this.index + this.itemsPerPage - 1: this.items.length - 1)
+            this.setCurrentIndex(this.index < this.itemsSource.count - this.itemsPerPage + 1 ? this.index + this.itemsPerPage - 1: this.itemsSource.count - 1)
         },
         pageUp() { this.setCurrentIndex(this.index > this.itemsPerPage - 1 ? this.index - this.itemsPerPage + 1: 0) },
         setCurrentIndex(index) {
+            console.log("setkurrent", index)
             if (index < 0)
                 index = 0
-            else if (index >= this.items.length)
-                index = this.items.length - 1
+            else if (index >= this.itemsSource.count)
+                index = this.itemsSource.count - 1
             this.index = index;
             this.scrollIntoView()
         },

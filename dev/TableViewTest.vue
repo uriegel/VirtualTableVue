@@ -2,7 +2,7 @@
     <div class="root">
         <h1>Table View Test</h1>
         <div class="container">
-            <table-view :eventBus="tableEventBus" :columns='columns' :items='items' 
+            <table-view :eventBus="tableEventBus" :columns='columns' :itemsSource='itemsSource' 
                 @selection-changed="onSelectionChanged">
                 <template v-slot=row >
                     <tr :class="{ 'isCurrent': row.item.index == selectedIndex }">
@@ -51,12 +51,12 @@ export default Vue.extend({
                     width: "18.3009%"
                 }
             ],
-            items: []
+            itemsSource: { count: 0, getItems: async () => await []}
         }
     },
     computed: {
         totalCount() {
-            return this.items.length
+            return this.itemsSource.count
         }
     },
     methods: {
@@ -67,17 +67,22 @@ export default Vue.extend({
         },
         fillItems(count) {
             this.items = []
-            Array.from(Array(count).keys()).map((n, i) => {
-                return {
-                    name: `name ${i}`,
-                    extension: `extension ${i}`,
-                    date: `datum ${i}`,
-                    description: `description ${i}`,
-                    isCurrent: false,
-                    index: i
-                }
-            }).forEach((n, i) => this.items[i] = n)
+
+            async function getItems(startRange, endRange) {
+                console.log("getitems", startRange, endRange)
+                return await Array.from(Array(endRange - startRange).keys()).map((n, i) => {
+                    return {
+                        name: `name ${i + startRange}`,
+                        extension: `extension ${i + startRange}`,
+                        date: `datum ${i + startRange}`,
+                        description: `description ${i + startRange}`,
+                        isCurrent: false,
+                        index: i + startRange
+                    }
+                })
+            }
             this.tableEventBus.$emit("focus")
+            this.itemsSource = { count, getItems }
         }
     },
     mounted() {
