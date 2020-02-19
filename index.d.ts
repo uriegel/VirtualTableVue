@@ -1,8 +1,8 @@
-declare module 'virtual-table-view' {
+declare module 'virtual-table-vue' {
     import { PluginFunction } from "vue"
     export const install: PluginFunction<{}>
 
-    export interface Column {
+    interface Column {
         name: string
         isSortable?: boolean
         sortAscending?: boolean
@@ -10,12 +10,12 @@ declare module 'virtual-table-view' {
         width?: number | string
     }
     
-    export interface TableViewItem {
+    interface TableViewItem {
         isCurrent?: boolean
         index: number
     }
         
-    export interface ItemsSource {
+    interface ItemsSource {
         count: number,
         getItems: (startRange: number, endRamge: number) => Promise<TableViewItem[]>
     } 
