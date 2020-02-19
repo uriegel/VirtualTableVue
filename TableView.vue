@@ -21,17 +21,6 @@ import Vue from 'vue'
 import Columns from './Columns.vue'
 import Scrollbar from './Scrollbar.vue'
 
-// export interface TableViewItem {
-//     isCurrent?: boolean
-//     // TODO index from F#
-//     index: number
-// }
-
-// export interface ItemsSource {
-//     count: number,
-//     getItems: (startRange: number, endRamge: number) => Promise<TableViewItem[]>
-// }
-
 export default Vue.extend({
 
     components: {
