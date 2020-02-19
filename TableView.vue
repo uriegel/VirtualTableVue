@@ -1,7 +1,7 @@
 <template>
     <div class="tableview-root" tabindex="1" ref="list" @keydown="onKeyDown" @mousewheel="onMouseWheel">
         <table ref="table" @mousedown="onMouseDown" @dblclick='onDblClick' 
-                :class="{ 'scrollbar': itemsSource.counth > itemsPerPage }">
+                :class="{ 'scrollbar': itemsSource.count > itemsPerPage }">
             <columns :columns='columns' @onColumnHeight='onColumnHeight'
                 @on-columns-widths-changed='onColumnsWidthChanged' @on-column-click='onColumnClick'></columns>
             <tbody ref="tbody">
