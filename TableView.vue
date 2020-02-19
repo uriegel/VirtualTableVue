@@ -1,5 +1,5 @@
 <template>
-    <div class="root" tabindex="1" ref="list" @keydown="onKeyDown" @mousewheel="onMouseWheel">
+    <div class="tableview-root" tabindex="1" ref="list" @keydown="onKeyDown" @mousewheel="onMouseWheel">
         <table ref="table" @mousedown="onMouseDown" @dblclick='onDblClick' 
                 :class="{ 'scrollbar': items.length > itemsPerPage }">
             <columns :columns='columns' @onColumnHeight='onColumnHeight'
@@ -47,7 +47,7 @@ export default Vue.extend({
     watch: {
         items: {
             immediate: true,
-            handler(newVal) {
+            handler() {
                 if (this.items.length)
                     this.items[0].isCurrent = true
                 this.items.forEach((n, i) => n.index = i)                    
@@ -192,11 +192,13 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.root {
+.tableview-root {
     flex-grow: 1;    
     position: relative;
     overflow: hidden;
     outline-width: 0px;
+    color: var(--tablevue-main-color);
+    background-color: var(--tablevue-main-background-color);
 }
 table {
     position: absolute;
@@ -227,8 +229,8 @@ tr.isCurrent {
     outline-style: solid;
     outline-offset: -1px;
 }
-.root:focus tr.isCurrent {
-    outline-color: var(--tr-selected-color);
+.tableview-root:focus tr.isCurrent {
+    outline-color: var(--tablevue-tr-selected-color);
     outline-width: 1px;
     outline-style: solid;
     outline-offset: -1px;

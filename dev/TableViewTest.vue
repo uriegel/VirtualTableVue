@@ -89,6 +89,7 @@ export default Vue.extend({
 
 <style>
 :root {
+    --tablevue-main-color: black;
     --tablevue-main-background-color: white;
     
     --tablevue-scrollbar-border-color: gray;
@@ -103,12 +104,14 @@ export default Vue.extend({
     --tablevue-selected-background-color: blue;
     --tablevue-columns-separator-color:  white;
     --tablevue-selected-background-hover-color: #0063ff;
+    --tablevue-tr-selected-color: red;
 }
 body {
     height: 100vh;
     margin: 0px;
     padding: 0px;
     display: flex;
+    color: #bbb;
 }
 </style>  
 
@@ -117,6 +120,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    background-color: #444;
 }
 .container {
     flex-grow: 1;
