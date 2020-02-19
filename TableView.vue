@@ -8,7 +8,7 @@
                 <slot v-for="item in displayItems" :item="item"></slot>
             </tbody>
         </table>    
-        <div class=scrollbar-container>
+        <div ref="scrollbar" class="scrollbar-container">
             <scrollbar :totalCount="totalCount" :itemsPerPage="itemsPerPage" :parentHeight="height" 
                 v-bind:style="{height: height+'px'}" v-model="position">
             </scrollbar>
@@ -73,7 +73,10 @@ export default Vue.extend({
     },
     methods: {
         focus() { this.$refs.list.focus() },
-        onColumnHeight(height) { this.columnHeight = height },
+        onColumnHeight(height) { 
+            this.columnHeight = height
+            this.$refs.scrollbar.style.top = `${height}px`
+        },
         onColumnsWidthChanged(widths) {
             this.$emit('columns-widths-changed', widths)
         },
@@ -218,7 +221,6 @@ td {
     padding-right: 19px;
 }
 .scrollbar-container {
-    top: var(--scrollbar-top);
     position: absolute;
     right: 0px;
     width: 0px;
