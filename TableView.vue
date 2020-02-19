@@ -55,16 +55,12 @@ export default Vue.extend({
     watch: {
         itemsSource: {
             immediate: true,
-            handler(/*newVal*/) {
-                // TODO: Append mode
-                //this.index = newVal.count - 1
+            handler() {
+                if (this.index == -1)
+                    this.setCurrentIndex(0) 
 
-                //this.setCurrentIndex(this.index)
-                this.setCurrentIndex(0)
-                //this.end()                
                 this.onResize()
-                // Append mode
-                // setTimeout(() => this.scrollIntoView(), 20)                
+                setTimeout(() => this.scrollIntoView(), 20)                
             }
         },
         position(newVal) { 
