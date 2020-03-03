@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/uriegel/VirtualTableVue#readme",
   "devDependencies": {
-    "@vue/cli": "^4.2.2",
-    "@vue/cli-service-global": "^4.2.2"
+    "@vue/cli": "^4.2.3",
+    "@vue/cli-service-global": "^4.2.3"
   }
 }
