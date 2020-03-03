@@ -17,6 +17,7 @@
         <div class="input">
             <input type="number" autofocus @change="onChange" placeholder="Items count" />
             <div>Message is: {{ totalCount }}</div>
+            <button @click="onThemeChanged">Theme changed</button>
         </div>    
     </div>
 </template>
@@ -24,6 +25,8 @@
 <script>
 import Vue from 'vue'
 import TableView from '../TableView.vue'
+
+var first = true
 
 export default Vue.extend({
     components: {
@@ -83,6 +86,17 @@ export default Vue.extend({
             }
             this.tableEventBus.$emit("focus")
             this.itemsSource = { count, getItems }
+        },
+        onThemeChanged() {
+            if (first) {
+                document.body.style.setProperty("font-size", "150%")
+                first = false
+            } else {
+                document.body.style.setProperty("font-size", "50%")
+                first = true
+            }
+            
+            this.tableEventBus.$emit("themeChanged")            
         }
     },
     mounted() {

@@ -14,7 +14,8 @@ import Vue from 'vue'
 
 export default Vue.extend({
     props: {
-        columns: {}
+        columns: {},
+        eventBus: { type: Object, default: () => new Vue() },        
     },
     watch: {
         columns: {
@@ -131,6 +132,7 @@ export default Vue.extend({
         } 
     },
     mounted() {
+        this.eventBus.$on('themeChanged', () => this.$emit('onColumnHeight', this.$el.clientHeight))
         this.$emit('onColumnHeight', this.$el.clientHeight)
     }
 })

@@ -2,7 +2,7 @@
     <div class="tableview-root" tabindex="1" ref="list" @keydown="onKeyDown" @mousewheel="onMouseWheel">
         <table ref="table" @mousedown="onMouseDown" @dblclick='onDblClick' 
                 :class="{ 'scrollbar': itemsSource.count > itemsPerPage }">
-            <columns :columns='columns' @onColumnHeight='onColumnHeight'
+            <columns :columns='columns' @onColumnHeight='onColumnHeight' :eventBus="columnsEventBus"
                 @on-columns-widths-changed='onColumnsWidthChanged' @on-column-click='onColumnClick'></columns>
             <tbody ref="tbody">
                 <slot v-for="item in displayItems" :item="item"></slot>
@@ -42,6 +42,7 @@ export default Vue.extend({
     },
     data() {
         return {
+            columnsEventBus: new Vue(),
             position: 0,
             height: 0,
             itemsPerPage: 0,
@@ -173,7 +174,24 @@ export default Vue.extend({
         }, 
         onColumnClick(index, descending) {
             this.$emit('column-click', index, descending)
-        }
+        },
+        onThemeChanged() {
+            if (this.$refs.tbody.childNodes.length > 0) {
+                const tr = this.$refs.tbody.childNodes[0]
+                this.itemHeight = tr.clientHeight
+            }   
+            else {
+                const observer = new MutationObserver((mutationsList, observer) => {
+                    let tr = mutationsList[0].addedNodes[0]
+                    this.itemHeight = tr.clientHeight
+                    observer.disconnect()
+                    this.onResize()
+                });
+                observer.observe(this.$refs.tbody, { attributes: true, childList: true, subtree: true })
+            }
+            this.columnsEventBus.$emit("themeChanged")
+            this.onResize()
+        } 
     },
     created() {
         window.addEventListener("resize", this.onResize)
@@ -193,6 +211,7 @@ export default Vue.extend({
         this.eventBus.$on('focus', this.focus)
         this.eventBus.$on('setCurrentIndex', this.setCurrentIndex)
         this.eventBus.$on('resize', this.onResize)
+        this.eventBus.$on('themeChanged', this.onThemeChanged)
         this.onResize()
     }
 })
