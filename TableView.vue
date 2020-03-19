@@ -59,9 +59,11 @@ export default Vue.extend({
             handler() {
                 if (this.index == -1)
                     this.setCurrentIndex(0) 
-
+                // TODO: Append-Mode
+                //this.setCurrentIndex(newVal.count - 1)
                 this.onResize()
-                setTimeout(() => this.scrollIntoView(), 20)                
+                // TODO: Append-Mode
+                //setTimeout(() => this.scrollIntoView(), 20)                
             }
         },
         position(newVal) { 
@@ -158,7 +160,6 @@ export default Vue.extend({
         },
         pageUp() { this.setCurrentIndex(this.index > this.itemsPerPage - 1 ? this.index - this.itemsPerPage + 1: 0) },
         setCurrentIndex(index) {
-            console.log("setkurrent", index)
             if (index < 0)
                 index = 0
             else if (index >= this.itemsSource.count)

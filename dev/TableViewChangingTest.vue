@@ -15,9 +15,9 @@
             </table-view>
         </div>
         <div class="input">
-            <input type="number" autofocus @change="onChange" placeholder="Items count" />
-            <div>Message is: {{ totalCount }}</div>
-            <button @click="onThemeChanged">Theme changed</button>
+            <button @click=onStart>Start</button>
+            <button @click=onStartRandom>Start random</button>
+            <button @click=onStartRandomSorted>Start random sorted</button>
         </div>    
     </div>
 </template>
@@ -25,8 +25,6 @@
 <script>
 import Vue from 'vue'
 import TableView from '../TableView.vue'
-
-var first = true
 
 export default Vue.extend({
     components: {
@@ -64,42 +62,63 @@ export default Vue.extend({
     },
     methods: {
         onSelectionChanged(index) { this.selectedIndex = index },
-        onChange(evt) {
-            const count = parseInt(evt.srcElement.value)
-            this.fillItems(count)
+        onStart() {
+            this.onStartFilling()
+        },  
+        onStartRandom() {
+            this.onStartFilling(true)
         },
-        fillItems(count) {
-            this.items = []
-
-            async function getItems(startRange, endRange) {
-                console.log("getitems", startRange, endRange)
-                return await Array.from(Array(endRange - startRange).keys()).map((n, i) => {
-                    return {
-                        name: `name ${i + startRange}`,
-                        extension: `extension ${i + startRange}`,
-                        date: `datum ${i + startRange}`,
-                        description: `description ${i + startRange}`,
-                        index: i + startRange
-                    }
-                })
-            }
-            this.tableEventBus.$emit("focus")
-            this.itemsSource = { count, getItems }
+        onStartRandomSorted() {
+            this.onStartFilling(true, true)
         },
-        onThemeChanged() {
-            if (first) {
-                document.body.style.setProperty("font-size", "150%")
-                first = false
-            } else {
-                document.body.style.setProperty("font-size", "50%")
-                first = true
-            }
+        onStartFilling(random, sorted) {        
+            const max = 500
+            const keys = (random ? Array.from({length: max}, () => Math.floor(Math.random() * max)) : Array.from(Array(max).keys()))
+                            .map((n, i) => { return { item: n, i}})
+            const items = Array.from(Array(max).keys()).map(n => {
+                return {
+                    name: `name ${n}`,
+                    date: n,
+                    description: `description ${n}`,
+                }
+            })
             
-            this.tableEventBus.$emit("themeChanged")            
+            async function getItems(startRange, endRange) {
+                this.selectedIndex
+                console.log("getItems", startRange, endRange)
+
+                const compare = (a, b) => a.date - b.date
+                const notCompare = () => 0
+
+                return keys
+                    .filter((n, i) => i >= startRange && i <= Math.min(this.count - 1, endRange))
+                    .map(n => {
+                        var item = {
+                            name: items[n.item].name,
+                            extension: n.i,
+                            date: items[n.item].date,
+                            description: items[n.item].description,
+                            index: n.i
+                        }
+                        return item
+                    })
+                    .sort(sorted ? compare : notCompare)
+            }
+
+            let count = 0
+            const interval = setInterval(() => {
+                count = count +1
+                if (count > max) {
+                    clearInterval(interval)
+                    return
+                }
+                console.log("count", count)
+                this.itemsSource = { count, getItems }
+            }, 1000)
+            //this.tableEventBus.$emit("focus")
         }
     },
     mounted() {
-        this.fillItems(500)
         setTimeout(() => this.tableEventBus.$emit("focus"))
     }
 })

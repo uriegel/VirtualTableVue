@@ -11,7 +11,6 @@ declare module 'virtual-table-vue' {
     }
     
     interface TableViewItem {
-        isCurrent?: boolean
         index: number
     }
         

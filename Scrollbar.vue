@@ -35,14 +35,14 @@ export default Vue.extend({
         }
     },
     watch: {
-        parentHeight: function (newVal, oldVal) {
+        parentHeight: function () {
             this.setPosition(Math.min(this.range -1, this.position))
         },
-        value: function (newVal, oldVal) {
+        value: function (newVal) {
             this.position = newVal
         },
-        totalCount: function (newVal, oldVal) {
-            this.setPosition(0)
+        totalCount: function () {
+        //    this.setPosition(0)
         }
     },
     computed: {
@@ -60,12 +60,12 @@ export default Vue.extend({
         }
     }, 
     methods: {
-        upMouseDown: function (evt) {
+        upMouseDown: function () {
             const mouseUp = () => this.setPosition(Math.max(0, this.position - 1))
             mouseUp()
             this.timer = setTimeout(() => this.interval = setInterval(mouseUp, 10), 600)
         },
-        downMouseDown: function (evt) {
+        downMouseDown: function () {
             const mouseDown = () => this.setPosition(Math.min(this.range -1, this.position + 1))
             mouseDown()
             this.timer = setTimeout(() => this.interval = setInterval(mouseDown, 10), 600)
@@ -97,18 +97,18 @@ export default Vue.extend({
                 const factor = Math.min(1, (Math.max(0, delta * 1.0 / range)))
                 this.setPosition(Math.floor(factor * maxPosition))
             }
-            const onup = (evt) => {
+            const onup = () => {
                 window.removeEventListener('mousemove', onmove)
                 window.removeEventListener('mouseup', onup)
             }
             window.addEventListener('mousemove', onmove)
             window.addEventListener('mouseup', onup)
         },
-        mouseup(evt) {
+        mouseup() {
             clearTimeout(this.timer)
             clearInterval(this.interval)
         },
-        mouseleave(evt) {
+        mouseleave() {
             clearTimeout(this.timer)
             clearInterval(this.interval)
         },

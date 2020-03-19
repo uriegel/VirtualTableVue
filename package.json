@@ -1,12 +1,13 @@
 {
   "name": "virtual-table-vue",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "A virtual list view implementation with multiple columns",
   "main": "index.js",
   "scripts": {
     "Columns": "vue serve ./dev/ColumnTest.vue",
     "Scrollbar": "vue serve ./dev/ScrollbarTest.vue",
-    "TableView": "vue serve ./dev/TableViewTest.vue"
+    "TableView": "vue serve ./dev/TableViewTest.vue",
+    "TableViewChanging": "vue serve ./dev/TableViewChangingTest.vue"
   },
   "repository": {
     "type": "git",
