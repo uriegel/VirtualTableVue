@@ -17,7 +17,7 @@
         <div class="input">
             <button @click=onStart>Start</button>
             <button @click=onStartRandom>Start random</button>
-            <button @click=onStartRandomSorted>Start random sorted</button>
+            <button @click=onUpdate>Update 3 50 60 61 </button>
         </div>    
     </div>
 </template>
@@ -25,6 +25,9 @@
 <script>
 import Vue from 'vue'
 import TableView from '../TableView.vue'
+
+var keys
+var items
 
 export default Vue.extend({
     components: {
@@ -71,11 +74,11 @@ export default Vue.extend({
         onStartRandomSorted() {
             this.onStartFilling(true, true)
         },
-        onStartFilling(random, sorted) {        
+        onStartFilling(random) {        
             const max = 500
-            const keys = (random ? Array.from({length: max}, () => Math.floor(Math.random() * max)) : Array.from(Array(max).keys()))
+            keys = (random ? Array.from({length: max}, () => Math.floor(Math.random() * max)) : Array.from(Array(max).keys()))
                             .map((n, i) => { return { item: n, i}})
-            const items = Array.from(Array(max).keys()).map(n => {
+            items = Array.from(Array(max).keys()).map(n => {
                 return {
                     name: `name ${n}`,
                     date: n,
@@ -86,9 +89,6 @@ export default Vue.extend({
             async function getItems(startRange, endRange) {
                 this.selectedIndex
                 console.log("getItems", startRange, endRange)
-
-                const compare = (a, b) => a.date - b.date
-                const notCompare = () => 0
 
                 return keys
                     .filter((n, i) => i >= startRange && i <= Math.min(this.count - 1, endRange))
@@ -102,7 +102,6 @@ export default Vue.extend({
                         }
                         return item
                     })
-                    .sort(sorted ? compare : notCompare)
             }
 
             let count = 0
@@ -116,6 +115,16 @@ export default Vue.extend({
                 this.itemsSource = { count, getItems }
             }, 1000)
             //this.tableEventBus.$emit("focus")
+        },
+        onUpdate() {
+            const update = (index) => {
+                const i = keys[index]
+                items[i.item].name = "Geändert " + index
+            }
+            update(3)
+            update(50)
+            update(60)
+            update(61)
         }
     },
     mounted() {
