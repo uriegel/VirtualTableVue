@@ -16,7 +16,6 @@
         </div>
         <div class="input">
             <button @click=onStart>Start</button>
-            <button @click=onStartRandom>Start random</button>
             <button @click=onUpdate>Update 3 50 60 61 </button>
         </div>    
     </div>
@@ -26,7 +25,6 @@
 import Vue from 'vue'
 import TableView from '../TableView.vue'
 
-var keys
 var items
 
 export default Vue.extend({
@@ -68,21 +66,15 @@ export default Vue.extend({
         onStart() {
             this.onStartFilling()
         },  
-        onStartRandom() {
-            this.onStartFilling(true)
-        },
-        onStartRandomSorted() {
-            this.onStartFilling(true, true)
-        },
-        onStartFilling(random) {        
+        onStartFilling() {        
             const max = 500
-            keys = (random ? Array.from({length: max}, () => Math.floor(Math.random() * max)) : Array.from(Array(max).keys()))
-                            .map((n, i) => { return { item: n, i}})
             items = Array.from(Array(max).keys()).map(n => {
                 return {
                     name: `name ${n}`,
+                    extension: n,
                     date: n,
                     description: `description ${n}`,
+                    index: n
                 }
             })
             
@@ -90,18 +82,7 @@ export default Vue.extend({
                 this.selectedIndex
                 console.log("getItems", startRange, endRange)
 
-                return keys
-                    .filter((n, i) => i >= startRange && i <= Math.min(this.count - 1, endRange))
-                    .map(n => {
-                        var item = {
-                            name: items[n.item].name,
-                            extension: n.i,
-                            date: items[n.item].date,
-                            description: items[n.item].description,
-                            index: n.i
-                        }
-                        return item
-                    })
+                return items.filter((n, i) => i >= startRange && i <= Math.min(this.count - 1, endRange))
             }
 
             let count = 0
@@ -113,18 +94,17 @@ export default Vue.extend({
                 }
                 console.log("count", count)
                 this.itemsSource = { count, getItems }
-            }, 1000)
+            }, 5000)
             //this.tableEventBus.$emit("focus")
         },
         onUpdate() {
             const update = (index) => {
-                const i = keys[index]
-                items[i.item].name = "Geändert " + index
+                items[index].name = "Geändert " + index
             }
             update(3)
-            update(50)
-            update(60)
-            update(61)
+            update(20)
+            update(24)
+            update(25)
         }
     },
     mounted() {
