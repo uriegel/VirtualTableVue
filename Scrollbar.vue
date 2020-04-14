@@ -2,21 +2,22 @@
     <transition name="slide">
         <div v-show="range > 1" class="scrollbar-container" 
                 @mousedown="pageMouseDown" @mouseleave="mouseleave" @mouseup="mouseup">
-            <triangle></triangle>
-            <div class="scrollbar">
+            <triangle @click="onUpClick"></triangle>
+            <div class="scrollbar" ref="scrollbar">
                 <div class="scrollbarGrip" @mousedown.stop="gripMouseDown" @mouseup="mouseup"
                     v-bind:style="{ height: gripHeight + 'px', top: gripTop + 'px' }">
                 </div>
             </div>
-            <!-- <div class="scrollbarDown" @mousedown.stop="downMouseDown" @mouseleave="mouseleave" @mouseup="mouseup">
-                <div class="scrollbarDownImg"></div>
-            </div> -->
-            <triangle :down=true></triangle>
+            <triangle :down=true @click="onDownClick"></triangle>
         </div>
     </transition>
 </template>
 
 <script>
+// TODO: Color svg
+// TODO: Scale in out: incorrect height
+// TODO: Scrollbar: width in style
+
 import Vue from 'vue'
 import Triangle from './triangle.vue'
 
@@ -33,12 +34,14 @@ export default Vue.extend({
     data() {
         return {
             position: 0,
+            scrollbarHeight: 0,
             timer: undefined,
             interval: undefined
         }
     },
     watch: {
         parentHeight: function () {
+            this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
             this.setPosition(Math.min(this.range -1, this.position))
         },
         value: function (newVal) {
@@ -53,27 +56,18 @@ export default Vue.extend({
             return Math.max(0, this.totalCount - this.itemsPerPage) + 1
         },
         gripHeight() {
-            var gripHeight = (this.parentHeight - 32) * (this.itemsPerPage / this.totalCount)
+            var gripHeight = this.scrollbarHeight * (this.itemsPerPage / this.totalCount)
             if (gripHeight < 5)
                 gripHeight = 5
             return gripHeight
         },
         gripTop() {
-            return (this.parentHeight - this.gripHeight) * (this.position / (this.range -1))
+            return (this.scrollbarHeight - this.gripHeight) * (this.position / (this.range -1))
         }
     }, 
     methods: {
-        upMouseDown: function () {
-            const mouseUp = () => this.setPosition(Math.max(0, this.position - 1))
-            mouseUp()
-            this.timer = setTimeout(() => this.interval = setInterval(mouseUp, 10), 600)
-        },
-        downMouseDown: function () {
-            const mouseDown = () => this.setPosition(Math.min(this.range -1, this.position + 1))
-            mouseDown()
-            this.timer = setTimeout(() => this.interval = setInterval(mouseDown, 10), 600)
-
-        },
+        onUpClick() { this.setPosition(Math.max(0, this.position - 1)) },
+        onDownClick() { this.setPosition(Math.min(this.range -1, this.position + 1)) },
         pageMouseDown: function (evt) {
             let up = evt.offsetY <= this.gripTop 
             const page = () => {
@@ -93,7 +87,7 @@ export default Vue.extend({
         },
         gripMouseDown: function (evt) {
             const startPos = evt.y - this.gripTop
-            const range = this.parentHeight - this.gripHeight
+            const range = this.scrollbarHeight - this.gripHeight
             const maxPosition = this.totalCount - this.itemsPerPage
             const onmove = (evt) => {
                 const delta = evt.y - startPos

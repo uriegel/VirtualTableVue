@@ -15,7 +15,7 @@ export default Vue.extend({
     methods: {
         upMouseDown: function () {
             //const mouseUp = () => this.setPosition(Math.max(0, this.position - 1))
-            const mouseUp = () => console.log("MausAb")
+            const mouseUp = () => this.$emit('click')
             mouseUp()
             this.timer = setTimeout(() => this.interval = setInterval(mouseUp, 10), 600)
         },
