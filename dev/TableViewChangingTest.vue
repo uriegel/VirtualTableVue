@@ -83,6 +83,16 @@ export default Vue.extend({
                 console.log("getItems", startRange, endRange)
 
                 return items.filter((n, i) => i >= startRange && i <= Math.min(this.count - 1, endRange))
+                        .reverse()
+                        .map((n, i) => {
+                            return {
+                                name: n.name,
+                                extension: n.extension,
+                                date: n.date,
+                                description: n.extension,    
+                                index: i
+                            }
+                        })
             }
 
             let count = 0
@@ -93,7 +103,8 @@ export default Vue.extend({
                     return
                 }
                 console.log("count", count)
-                this.itemsSource = { count, getItems }
+                this.itemsSource = { count: 0, getItems }
+                setTimeout(() => this.itemsSource = { count, getItems })
             }, 5000)
             //this.tableEventBus.$emit("focus")
         },

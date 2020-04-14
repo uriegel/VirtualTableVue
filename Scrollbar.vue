@@ -1,26 +1,29 @@
 <template>
     <transition name="slide">
-        <div v-show="range > 1" class="scrollbar" 
+        <div v-show="range > 1" class="scrollbar-container" 
                 @mousedown="pageMouseDown" @mouseleave="mouseleave" @mouseup="mouseup">
-            <div class="scrollbarUp" @mousedown.stop="upMouseDown" @mouseleave="mouseleave" @mouseup="mouseup">
-                <div class="scrollbarUpImg"></div>
+            <triangle></triangle>
+            <div class="scrollbar">
+                <div class="scrollbarGrip" @mousedown.stop="gripMouseDown" @mouseup="mouseup"
+                    v-bind:style="{ height: gripHeight + 'px', top: gripTop + 'px' }">
+                </div>
             </div>
-            <div class="scrollbarGrip" @mousedown.stop="gripMouseDown" @mouseup="mouseup"
-                v-bind:style="{ height: gripHeight + 'px', top: gripTop + 'px' }">
-            </div>
-            <div class="scrollbarDown" @mousedown.stop="downMouseDown" @mouseleave="mouseleave" @mouseup="mouseup">
+            <!-- <div class="scrollbarDown" @mousedown.stop="downMouseDown" @mouseleave="mouseleave" @mouseup="mouseup">
                 <div class="scrollbarDownImg"></div>
-            </div>
+            </div> -->
+            <triangle :down=true></triangle>
         </div>
     </transition>
 </template>
 
 <script>
 import Vue from 'vue'
-
-const scrollerHeight = 15
+import Triangle from './triangle.vue'
 
 export default Vue.extend({
+    components: {
+        Triangle
+    },    
     props: {
         value: Number,
         totalCount: Number,
@@ -56,7 +59,7 @@ export default Vue.extend({
             return gripHeight
         },
         gripTop() {
-            return scrollerHeight + ((this.parentHeight - this.gripHeight - 2 * scrollerHeight) * (this.position / (this.range -1)))
+            return (this.parentHeight - this.gripHeight) * (this.position / (this.range -1))
         }
     }, 
     methods: {
@@ -89,8 +92,8 @@ export default Vue.extend({
             this.timer = setTimeout(() => this.interval = setInterval(page, 50), 600)
         },
         gripMouseDown: function (evt) {
-            const startPos = evt.y - this.gripTop + scrollerHeight
-            const range = this.parentHeight - this.gripHeight - 2 * scrollerHeight
+            const startPos = evt.y - this.gripTop
+            const range = this.parentHeight - this.gripHeight
             const maxPosition = this.totalCount - this.itemsPerPage
             const onmove = (evt) => {
                 const delta = evt.y - startPos
@@ -121,7 +124,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.scrollbar {
+.scrollbar-container {
     position: absolute;
     height: 100%;
     width: 16px; 
@@ -133,6 +136,12 @@ export default Vue.extend({
     border-color: var(--tablevue-scrollbar-border-color);
     border-width: 1px;
     user-select: none;
+    display: flex;
+    flex-direction: column;    
+}
+.scrollbar {
+    flex-grow: 1;
+    position: relative;
 }
 
 .slide-enter-active, .slide-leave-active {
