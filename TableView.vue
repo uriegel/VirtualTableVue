@@ -8,7 +8,7 @@
                 <slot v-for="item in displayItems" :item="item"></slot>
             </tbody>
         </table>    
-        <div ref="scrollbar" class="table-scrollbar">
+        <div ref="scrollbar" class="table-scrollbar" :eventBus="scrollbarEventBus">
             <scrollbar :totalCount="itemsSource.count" :itemsPerPage="itemsPerPage" :parentHeight="height" 
                 v-bind:style="{height: height+'px'}" v-model="position">
             </scrollbar>
@@ -43,6 +43,7 @@ export default Vue.extend({
     data() {
         return {
             columnsEventBus: new Vue(),
+            scrollbarEventBus: new Vue(),
             position: 0,
             height: 0,
             itemsPerPage: 0,
@@ -191,6 +192,7 @@ export default Vue.extend({
                 observer.observe(this.$refs.tbody, { attributes: true, childList: true, subtree: true })
             }
             this.columnsEventBus.$emit("themeChanged")
+            this.scrollbarEventBus.$emit("themeChanged")
             this.onResize()
         } 
     },
