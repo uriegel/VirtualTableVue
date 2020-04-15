@@ -14,9 +14,11 @@
 </template>
 
 <script>
-// TODO: Color svg
 // TODO: Scale in out: incorrect height
 // TODO: Scrollbar: width in style
+// TODO: Scrollbar: borderwidth
+// TODO: Scrollbar: withoutbuttons
+// TODO: Scrollbar: grip rounded
 
 import Vue from 'vue'
 import Triangle from './triangle.vue'
@@ -139,67 +141,12 @@ export default Vue.extend({
 }
 
 .slide-enter-active, .slide-leave-active {
-    transition: width 0.4s, height 0.4s, opacity 0.4s;
+    transform-origin: right top;
+    transition: transform 0.4s, opacity 0.4s;
 }
 .slide-enter, .slide-leave-to {
     opacity: 0;
-    width: 0px;
-    height: 0px;
-}
-
-.scrollbarUp {
-    position: absolute;
-    box-sizing: border-box;
-    background-color: var(--tablevue-main-background-color);
-    width: 100%;
-    height: 15px;
-    transition: background-color 0.5s;
-}
-
-.scrollbarUp:hover, .scrollbarDown:hover {
-    background-color: var(--tablevue-scrollbar-grip-color);
-}
-
-.scrollbarUp:active, .scrollbarDown:active {
-    background-color: var(--tablevue-scrollbar-button-active-color);
-    cursor: default;
-}
-
-.scrollbarUp:active .scrollbarUpImg, .scrollbarDown:active .scrollbarDownImg {
-    border-bottom-color: var(--tablevue-scrollbar-border-active-color);
-    border-top-color: var(--tablevue-scrollbar-border-active-color);
-}
-
-.scrollbarUpImg {
-    position: absolute;
-    top: 4px;
-    left: 3px;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-bottom: 6px solid var(--tablevue-scrollbar-image-color);
-}
-
-.scrollbarDown {
-    position: absolute;
-    box-sizing: border-box;
-    background-color: var(--tablevue-main-background-color);
-    width: 100%;
-    bottom: 0px;
-    height: 15px;
-    transition: background-color 0.5s;
-}
-
-.scrollbarDownImg {
-    position: absolute;
-    top: 4px;
-    left: 3px;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 6px solid var(--tablevue-scrollbar-image-color);
+    transform: scale(0);
 }
 
 .scrollbarGrip {

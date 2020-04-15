@@ -111,13 +111,16 @@ export default Vue.extend({
     --tablevue-main-background-color: white;
     
     --tablevue-scrollbar-border-color: gray;
-    --tablevue-scrollbar-border-active-color: #444;
-    --tablevue-scrollbar-button-active-color: #aaa;
-    --tablevue-scrollbar-image-color: #666;
     --tablevue-scrollbar-grip-color: rgb(209, 209, 209);
     --tablevue-scrollbar-grip-hover-color: #bbb;
     --tablevue-scrollbar-grip-active-color: #999;
-
+    --tablevue-scrollbar-button-color: #666;
+    --tablevue-scrollbar-button-hover-color: #555;
+    --tablevue-scrollbar-button-active-color: #444;
+    --tablevue-scrollbar-button-background-color: white;
+    --tablevue-scrollbar-button-hover-background-color: rgb(209, 209, 209);
+    --tablevue-scrollbar-button-active-background-color: #aaa;
+    
     --tablevue-selected-color:  white;
     --tablevue-selected-background-color: blue;
     --tablevue-columns-separator-color:  white;
