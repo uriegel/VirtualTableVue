@@ -14,7 +14,6 @@
 </template>
 
 <script>
-// TODO: Scale in out: incorrect height
 // TODO: Scrollbar: width in style
 // TODO: Scrollbar: borderwidth
 // TODO: Scrollbar: withoutbuttons

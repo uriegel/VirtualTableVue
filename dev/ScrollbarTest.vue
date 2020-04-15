@@ -50,8 +50,10 @@ export default Vue.extend({
             this.onResize()
         },
         onResize: function () {
-            this.height = (this.$refs.list).clientHeight
-            this.itemsPerPage = Math.floor(this.height / itemHeight)
+            setTimeout(() => {
+                this.height = (this.$refs.list).clientHeight
+                this.itemsPerPage = Math.floor(this.height / itemHeight)
+            })
         },
         onMouseWheel: function (evt) { this.$emit('mousewheel', evt) }
     },
