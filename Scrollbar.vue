@@ -14,9 +14,9 @@
 </template>
 
 <script>
-// TODO: Scrollbar: borderwidth
 // TODO: Scrollbar: withoutbuttons
 // TODO: Scrollbar: grip rounded
+// TODO: Scrollbar: slide in
 
 import Vue from 'vue'
 import Triangle from './triangle.vue'
@@ -44,7 +44,7 @@ export default Vue.extend({
             setTimeout(() =>{
                 this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
                 this.setPosition(Math.min(this.range -1, this.position))
-            }, 20)
+            }, 100)
         },
         value: function (newVal) {
             this.position = newVal
@@ -126,11 +126,11 @@ export default Vue.extend({
     width: var(--tablevue-scrollbar-width); 
     overflow: hidden;
     box-sizing: border-box;
-    background-color: var(--tablevue-main-background-color);
+    background-color: var(--tablevue-scrollbar-background-color);
     right: 0px;
     border-style: solid;
     border-color: var(--tablevue-scrollbar-border-color);
-    border-width: 1px;
+    border-width: var(--tablevue-scrollbar-border-width);
     user-select: none;
     display: flex;
     flex-direction: column;    
