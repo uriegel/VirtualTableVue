@@ -4,7 +4,7 @@
                 @mousedown="pageMouseDown" @mouseleave="mouseleave" @mouseup="mouseup">
             <triangle @click="onUpClick"></triangle>
             <div class="scrollbar" ref="scrollbar">
-                <div class="scrollbarGrip" @mousedown.stop="gripMouseDown" @mouseup="mouseup"
+                <div class="scrollbarGrip" ref="grip" @mousedown.stop="gripMouseDown" @mouseup="mouseup"
                     v-bind:style="{ height: gripHeight + 'px', top: gripTop + 'px' }">
                 </div>
             </div>
@@ -117,9 +117,11 @@ export default Vue.extend({
             this.$emit('input', this.position)
         },
         refresh() {
-            setTimeout(() =>{
+            setTimeout(() => {
+                this.$refs.grip.style.display = 'none'
                 this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
                 this.setPosition(Math.min(this.range -1, this.position))
+                setTimeout(() => this.$refs.grip.style.display = null, 10)
             }, 100)            
         }
     }
