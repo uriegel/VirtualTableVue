@@ -33,6 +33,7 @@ export default Vue.extend({
 
 <style scoped>
 .svg {
+    display: var(--tablevue-scrollbar-button-display);
     width: 100%;
     background-color: var(--tablevue-scrollbar-button-background-color);
     transition: background-color 0.3s;

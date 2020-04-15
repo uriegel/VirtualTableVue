@@ -106,16 +106,46 @@ export default Vue.extend({
 </script>
 
 <style>
-:root {
+/*:root {
     --tablevue-main-color: black;
     --tablevue-main-background-color: white;
     
     --tablevue-scrollbar-width: 16px;
     --tablevue-scrollbar-border-width: 1px;
+    --tablevue-scrollbar-background-color: azure;    
     --tablevue-scrollbar-border-color: gray;
+    --tablevue-scrollbar-grip-width: 100%;    
     --tablevue-scrollbar-grip-color: rgb(209, 209, 209);
     --tablevue-scrollbar-grip-hover-color: #bbb;
     --tablevue-scrollbar-grip-active-color: #999;
+    --tablevue-scrollbar-button-color: #666;
+    --tablevue-scrollbar-button-hover-color: #555;
+    --tablevue-scrollbar-button-active-color: #444;
+    --tablevue-scrollbar-button-background-color: white;
+    --tablevue-scrollbar-button-hover-background-color: rgb(209, 209, 209);
+    --tablevue-scrollbar-button-active-background-color: #aaa;
+    
+    --tablevue-selected-color: white;
+    --tablevue-selected-background-color: blue;
+    --tablevue-columns-separator-color:  white;
+    --tablevue-selected-background-hover-color: #0063ff;
+    --tablevue-tr-selected-color: red;
+}*/
+:root {
+    --tablevue-main-color: black;
+    --tablevue-main-background-color: white;
+    
+    --tablevue-scrollbar-width: 12px;
+    --tablevue-scrollbar-border-width: 0px;
+    --tablevue-scrollbar-grip-radius: 999px;
+    --tablevue-scrollbar-button-display: none; 
+    --tablevue-scrollbar-background-color: transparent;
+    --tablevue-scrollbar-background-hover-color: rgb(192, 192, 192);
+    --tablevue-scrollbar-grip-color: gray;    
+    --tablevue-scrollbar-grip-hover-color: gray;    
+    --tablevue-scrollbar-grip-active-color: red;    
+    --tablevue-scrollbar-grip-width: 4px;    
+    --tablevue-scrollbar-grip-right: 1px;    
     --tablevue-scrollbar-button-color: #666;
     --tablevue-scrollbar-button-hover-color: #555;
     --tablevue-scrollbar-button-active-color: #444;

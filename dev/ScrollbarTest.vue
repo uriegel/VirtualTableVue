@@ -70,11 +70,13 @@ export default Vue.extend({
     
     --tablevue-scrollbar-width: 16px;
     --tablevue-scrollbar-border-width: 1px;
+    /* --tablevue-scrollbar-button-display: none; */
     --tablevue-scrollbar-background-color: azure;
     --tablevue-scrollbar-border-color: gray;
     --tablevue-scrollbar-grip-color: rgb(209, 209, 209);
     --tablevue-scrollbar-grip-hover-color: #bbb;
     --tablevue-scrollbar-grip-active-color: #999;
+    --tablevue-scrollbar-button-display: none;
     --tablevue-scrollbar-button-color: #666;
     --tablevue-scrollbar-button-hover-color: #555;
     --tablevue-scrollbar-button-active-color: #444;

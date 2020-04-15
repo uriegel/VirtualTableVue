@@ -14,10 +14,6 @@
 </template>
 
 <script>
-// TODO: Scrollbar: withoutbuttons
-// TODO: Scrollbar: grip rounded
-// TODO: Scrollbar: slide in
-
 import Vue from 'vue'
 import Triangle from './triangle.vue'
 
@@ -126,7 +122,6 @@ export default Vue.extend({
     width: var(--tablevue-scrollbar-width); 
     overflow: hidden;
     box-sizing: border-box;
-    background-color: var(--tablevue-scrollbar-background-color);
     right: 0px;
     border-style: solid;
     border-color: var(--tablevue-scrollbar-border-color);
@@ -136,8 +131,18 @@ export default Vue.extend({
     flex-direction: column;    
 }
 .scrollbar {
+    background-color: var(--tablevue-scrollbar-background-color);
+    transition: background-color 0.5s;
     flex-grow: 1;
     position: relative;
+}
+
+.scrollbar:hover {
+    background-color: var(--tablevue-scrollbar-background-hover-color);
+}
+
+.scrollbar:active {
+    background-color: var(--tablevue-scrollbar-background-hover-color);
 }
 
 .slide-enter-active, .slide-leave-active {
@@ -152,11 +157,21 @@ export default Vue.extend({
 .scrollbarGrip {
     position: absolute;
     box-sizing: border-box;
+    border-radius: var(--tablevue-scrollbar-grip-radius);
     background-color: var(--tablevue-scrollbar-grip-color);
     top: 15px;
-    width: 100%;
+    width: var(--tablevue-scrollbar-grip-width);
+    right: var(--tablevue-scrollbar-grip-right);
     height: 28px;
-    transition: background-color 0.5s;
+    transition: background-color 0.5s, width 0.5s;
+}
+
+.scrollbar:hover .scrollbarGrip {
+    width: 100%;
+}
+
+.scrollbar:active .scrollbarGrip {
+    width: 100%;
 }
 
 .scrollbarGrip:hover {
