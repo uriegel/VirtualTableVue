@@ -192,7 +192,7 @@ export default Vue.extend({
                 observer.observe(this.$refs.tbody, { attributes: true, childList: true, subtree: true })
             }
             this.columnsEventBus.$emit("themeChanged")
-            this.scrollbarEventBus.$emit("themeChanged")
+            this.scrollbarEventBus.$emit("refresh")
             this.onResize()
         } 
     },
