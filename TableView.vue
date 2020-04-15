@@ -8,8 +8,8 @@
                 <slot v-for="item in displayItems" :item="item"></slot>
             </tbody>
         </table>    
-        <div ref="scrollbar" class="table-scrollbar" :eventBus="scrollbarEventBus">
-            <scrollbar :totalCount="itemsSource.count" :itemsPerPage="itemsPerPage" :parentHeight="height" 
+        <div ref="scrollbar" class="table-scrollbar" >
+            <scrollbar :totalCount="itemsSource.count" :itemsPerPage="itemsPerPage" :parentHeight="height" :eventBus="scrollbarEventBus"
                 v-bind:style="{height: height+'px'}" v-model="position">
             </scrollbar>
         </div>    

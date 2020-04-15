@@ -18,6 +18,7 @@
             <input type="number" autofocus @change="onChange" placeholder="Items count" />
             <div>Message is: {{ totalCount }}</div>
             <button @click="onThemeChanged">Theme changed</button>
+            <button @click="newTheme">New Theme</button>
         </div>    
     </div>
 </template>
@@ -96,6 +97,17 @@ export default Vue.extend({
             }
             
             this.tableEventBus.$emit("themeChanged")            
+        },
+        newTheme() {
+            const head = document.getElementsByTagName('head')[0]
+            let link = document.createElement('link')
+            link.rel = 'stylesheet'
+            link.id = 'theme'
+            link.type = 'text/css'
+            link.href = `http://localhost:9865/assets/themes/yaru.css`
+            link.media = 'all'
+            head.appendChild(link)
+            this.tableEventBus.$emit("themeChanged")
         }
     },
     mounted() {
@@ -106,7 +118,7 @@ export default Vue.extend({
 </script>
 
 <style>
-/*:root {
+:root {
     --tablevue-main-color: black;
     --tablevue-main-background-color: white;
     
@@ -130,8 +142,8 @@ export default Vue.extend({
     --tablevue-columns-separator-color:  white;
     --tablevue-selected-background-hover-color: #0063ff;
     --tablevue-tr-selected-color: red;
-}*/
-:root {
+}
+/*:root {
     --tablevue-main-color: black;
     --tablevue-main-background-color: white;
     
@@ -158,7 +170,7 @@ export default Vue.extend({
     --tablevue-columns-separator-color:  white;
     --tablevue-selected-background-hover-color: #0063ff;
     --tablevue-tr-selected-color: red;
-}
+}*/
 body {
     height: 100vh;
     margin: 0px;

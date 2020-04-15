@@ -48,7 +48,7 @@ export default Vue.extend({
         }
     },
     mounted() {
-        this.eventBus.$on('refresh', this.refresh())
+        this.eventBus.$on('refresh', () => this.refresh())
     },
     computed: {
         range() {
@@ -118,11 +118,9 @@ export default Vue.extend({
         },
         refresh() {
             setTimeout(() => {
-                this.$refs.grip.style.display = 'none'
                 this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
                 this.setPosition(Math.min(this.range -1, this.position))
-                setTimeout(() => this.$refs.grip.style.display = null, 10)
-            }, 100)            
+            }, 200)            
         }
     }
 })
