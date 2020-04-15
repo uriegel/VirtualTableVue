@@ -22,6 +22,7 @@ export default Vue.extend({
         Triangle
     },    
     props: {
+        eventBus: { type: Object, default: () => new Vue() },
         value: Number,
         totalCount: Number,
         itemsPerPage: Number,
@@ -37,10 +38,7 @@ export default Vue.extend({
     },
     watch: {
         parentHeight: function () {
-            setTimeout(() =>{
-                this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
-                this.setPosition(Math.min(this.range -1, this.position))
-            }, 100)
+            this.refresh()
         },
         value: function (newVal) {
             this.position = newVal
@@ -48,6 +46,9 @@ export default Vue.extend({
         totalCount: function () {
         //    this.setPosition(0)
         }
+    },
+    mounted() {
+        this.eventBus.$on('refresh', this.refresh())
     },
     computed: {
         range() {
@@ -91,13 +92,17 @@ export default Vue.extend({
                 const delta = evt.y - startPos
                 const factor = Math.min(1, (Math.max(0, delta * 1.0 / range)))
                 this.setPosition(Math.floor(factor * maxPosition))
+                evt.preventDefault()
+                evt.stopPropagation()
             }
             const onup = () => {
-                window.removeEventListener('mousemove', onmove)
-                window.removeEventListener('mouseup', onup)
+                window.removeEventListener('mousemove', onmove, true)
+                window.removeEventListener('mouseup', onup, true)
             }
-            window.addEventListener('mousemove', onmove)
-            window.addEventListener('mouseup', onup)
+            window.addEventListener('mousemove', onmove, true)
+            window.addEventListener('mouseup', onup, true)
+            evt.preventDefault()
+            evt.stopPropagation()
         },
         mouseup() {
             clearTimeout(this.timer)
@@ -110,6 +115,12 @@ export default Vue.extend({
         setPosition(position) {
             this.position = position
             this.$emit('input', this.position)
+        },
+        refresh() {
+            setTimeout(() =>{
+                this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
+                this.setPosition(Math.min(this.range -1, this.position))
+            }, 100)            
         }
     }
 })

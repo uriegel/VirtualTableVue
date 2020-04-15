@@ -113,6 +113,8 @@ export default Vue.extend({
 
                 window.addEventListener('mousemove', onmove)
                 window.addEventListener('mouseup', onup)
+                evt.preventDefault()
+                evt.stopPropagation()
             }
         },
         onClick: function (column) {
