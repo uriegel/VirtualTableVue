@@ -110,6 +110,7 @@ export default Vue.extend({
     --tablevue-main-color: black;
     --tablevue-main-background-color: white;
     
+    --tablevue-scrollbar-width: 16px;
     --tablevue-scrollbar-border-color: gray;
     --tablevue-scrollbar-grip-color: rgb(209, 209, 209);
     --tablevue-scrollbar-grip-hover-color: #bbb;

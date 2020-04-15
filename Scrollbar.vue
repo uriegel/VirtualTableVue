@@ -14,7 +14,6 @@
 </template>
 
 <script>
-// TODO: Scrollbar: width in style
 // TODO: Scrollbar: borderwidth
 // TODO: Scrollbar: withoutbuttons
 // TODO: Scrollbar: grip rounded
@@ -45,7 +44,7 @@ export default Vue.extend({
             setTimeout(() =>{
                 this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
                 this.setPosition(Math.min(this.range -1, this.position))
-            })
+            }, 20)
         },
         value: function (newVal) {
             this.position = newVal
@@ -124,7 +123,7 @@ export default Vue.extend({
 .scrollbar-container {
     position: absolute;
     height: 100%;
-    width: 16px; 
+    width: var(--tablevue-scrollbar-width); 
     overflow: hidden;
     box-sizing: border-box;
     background-color: var(--tablevue-main-background-color);
