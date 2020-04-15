@@ -8,7 +8,7 @@
                 <slot v-for="item in displayItems" :item="item"></slot>
             </tbody>
         </table>    
-        <div ref="scrollbar" class="scrollbar-container">
+        <div ref="scrollbar" class="table-scrollbar">
             <scrollbar :totalCount="itemsSource.count" :itemsPerPage="itemsPerPage" :parentHeight="height" 
                 v-bind:style="{height: height+'px'}" v-model="position">
             </scrollbar>
@@ -244,7 +244,7 @@ td {
 .scrollbar td:last-child {
     padding-right: 19px;
 }
-.scrollbar-container {
+.table-scrollbar {
     position: absolute;
     right: 0px;
     width: 0px;

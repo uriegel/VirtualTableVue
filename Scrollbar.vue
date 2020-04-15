@@ -42,8 +42,10 @@ export default Vue.extend({
     },
     watch: {
         parentHeight: function () {
-            this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
-            this.setPosition(Math.min(this.range -1, this.position))
+            setTimeout(() =>{
+                this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
+                this.setPosition(Math.min(this.range -1, this.position))
+            })
         },
         value: function (newVal) {
             this.position = newVal
