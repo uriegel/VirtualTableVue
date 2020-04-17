@@ -3,7 +3,7 @@
         <h1>Table View Test</h1>
         <div class="container">
             <table-view :eventBus="tableEventBus" :columns='columns' :itemsSource='itemsSource' 
-                @selection-changed="onSelectionChanged">
+                @selection-changed="onSelectionChanged" @action='onAction'>
                 <template v-slot=row >
                     <tr :class="{ 'isCurrent': row.item.index == selectedIndex }">
                         <td>{{row.item.name}}</td>
@@ -86,6 +86,9 @@ export default Vue.extend({
             }
             this.tableEventBus.$emit("focus")
             this.itemsSource = { count, getItems }
+        },
+        onAction() {
+            alert(this.selectedIndex)
         },
         onThemeChanged() {
             if (first) {

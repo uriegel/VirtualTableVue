@@ -147,7 +147,7 @@ export default Vue.extend({
             }
         },
         onDblClick() {
-        //    this.$emit('action', this.items[this.index])
+            this.$emit('action')
         },
         async setPosition() {
             this.displayItems = await this.itemsSource.getItems(this.startIndex, Math.min(this.startIndex + this.itemsPerPage + 1, this.itemsSource.count))
