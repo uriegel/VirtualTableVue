@@ -38,7 +38,6 @@ export default Vue.extend({
     },
     watch: {
         parentHeight: function () {
-            console.log("ParentHeight set", this.parentHeight)
             this.refresh()
         },
         value: function (newVal) {
@@ -118,10 +117,13 @@ export default Vue.extend({
             this.$emit('input', this.position)
         },
         refresh() {
-            console.log("Refresh")
             setTimeout(() => {
                 this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
-                console.log("scrollbarHeight", this.scrollbarHeight)
+                if (!this.scrollbarHeight)
+                    setTimeout(() => {     
+                        this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
+                        this.setPosition(Math.min(this.range -1, this.position))
+                    }, 1000)
                 this.setPosition(Math.min(this.range -1, this.position))
             }, 200)            
         }
