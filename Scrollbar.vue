@@ -52,7 +52,10 @@ export default Vue.extend({
     },
     computed: {
         range() {
-            return Math.max(0, this.totalCount - this.itemsPerPage) + 1
+            const range = Math.max(0, this.totalCount - this.itemsPerPage) + 1
+            if (range > 1 && this.scrollbarHeight == 0) 
+                this.refresh()
+            return range
         },
         gripHeight() {
             var gripHeight = this.scrollbarHeight * (this.itemsPerPage / this.totalCount)
@@ -119,11 +122,6 @@ export default Vue.extend({
         refresh() {
             setTimeout(() => {
                 this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
-                if (!this.scrollbarHeight)
-                    setTimeout(() => {     
-                        this.scrollbarHeight = this.$refs.scrollbar.clientHeight 
-                        this.setPosition(Math.min(this.range -1, this.position))
-                    }, 1000)
                 this.setPosition(Math.min(this.range -1, this.position))
             }, 200)            
         }

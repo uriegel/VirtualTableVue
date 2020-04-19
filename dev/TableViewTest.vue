@@ -114,7 +114,7 @@ export default Vue.extend({
         }
     },
     mounted() {
-        this.fillItems(20)
+        //this.fillItems(20)
         setTimeout(() => this.tableEventBus.$emit("focus"))
     }
 })
