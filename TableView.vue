@@ -244,7 +244,7 @@ td {
     transition: padding-right .4s;
 }    
 .scrollbar td:last-child {
-    padding-right: 19px;
+    padding-right: var(--tablevue-right-margin-scrollbar);
 }
 .table-scrollbar {
     position: absolute;

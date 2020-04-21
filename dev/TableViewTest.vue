@@ -9,7 +9,7 @@
                         <td>{{row.item.name}}</td>
                         <td>{{row.item.extension}}</td>
                         <td>{{row.item.date}}</td>
-                        <td>{{row.item.description}}</td>
+                        <td class="rightAligned">{{row.item.description}}</td>
                     </tr>
                 </template>
             </table-view>
@@ -124,6 +124,7 @@ export default Vue.extend({
 :root {
     --tablevue-main-color: black;
     --tablevue-main-background-color: white;
+    --tablevue-right-margin-scrollbar: 16px;
     
     --tablevue-scrollbar-width: 16px;
     --tablevue-scrollbar-border-width: 1px;
@@ -197,5 +198,8 @@ body {
 }
 .input {
     margin: 20px;
+}
+.rightAligned {
+    text-align: right;
 }
 </style>
