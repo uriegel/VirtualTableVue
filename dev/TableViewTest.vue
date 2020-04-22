@@ -55,7 +55,7 @@ export default Vue.extend({
                     width: "18.3009%"
                 }
             ],
-            itemsSource: { count: 0, getItems: async () => await []}
+            itemsSource: { count: 0, getItems: async () => await [], indexToSelect: 0}
         }
     },
     computed: {
@@ -85,7 +85,7 @@ export default Vue.extend({
                 })
             }
             this.tableEventBus.$emit("focus")
-            this.itemsSource = { count, getItems }
+            this.itemsSource = { count, getItems, indexToSelect: 9 }
         },
         onAction() {
             alert(this.selectedIndex)

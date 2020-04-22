@@ -57,14 +57,9 @@ export default Vue.extend({
     watch: {
         itemsSource: {
             immediate: true,
-            handler() {
-                if (this.index == -1)
-                    this.setCurrentIndex(0) 
-                // TODO: Append-Mode
-                //this.setCurrentIndex(newVal.count - 1)
+            handler(newVal) {
+                this.setCurrentIndex(newVal.indexToSelect || 0) 
                 this.onResize()
-                // TODO: Append-Mode
-                //setTimeout(() => this.scrollIntoView(), 20)                
             }
         },
         position(newVal) { 

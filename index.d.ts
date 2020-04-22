@@ -16,6 +16,7 @@ declare module 'virtual-table-vue' {
         
     interface ItemsSource {
         count: number,
-        getItems: (startRange: number, endRamge: number) => Promise<TableViewItem[]>
+        getItems: (startRange: number, endRange: number) => Promise<TableViewItem[]>
+        indexToSelect: number | undefined
     } 
 }
