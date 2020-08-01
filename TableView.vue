@@ -170,8 +170,8 @@ export default Vue.extend({
             if (this.index > this.position + this.itemsPerPage - 1)
                 this.position = this.index - this.itemsPerPage + 1
         }, 
-        onColumnClick(index, descending) {
-            this.$emit('column-click', index, descending)
+        onColumnClick(index, descending, add) {
+            this.$emit('column-click', index, descending, add)
         },
         onThemeChanged() {
             if (this.$refs.tbody.childNodes.length > 0) {
