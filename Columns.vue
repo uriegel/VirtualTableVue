@@ -1,9 +1,13 @@
 <template>
     <thead>
         <tr ref='tr' :class="{'pointer-ew': draggingReady }">
-            <th v-for="column in columns" :key="column.name" @mousemove='onMouseMove' @mousedown='onMouseDown' @click='onClick(column)' @dblclick.stop='() => {}'
-                :class="{'is-sortable': column.isSortable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">
-                {{column.name}}
+            <th v-for="column in columns" :key="column.name" @mousemove='onMouseMove' @mousedown='onMouseDown' @dblclick.stop='() => {}'>
+                <div class="col">
+                    <div class="maincol" @click='onClick(column)'
+                        :class="{'is-sortable': column.isSortable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">{{column.name}}</div>
+                    <div @click='onAddClick(column)' :class="{ 'is-sortable': column.isAddSortable, 'sort-ascending': column.sortAddAscending, 'sort-descending': column.sortAddDescending
+                        }">{{column.add}}</div>
+                </div>                        
             </th>
         </tr>
     </thead>
@@ -53,7 +57,7 @@ export default Vue.extend({
                 const dragleft = mouseX < 3
 
                 const startDragPosition = evt.pageX
-                const targetColumn = evt.target
+                const targetColumn = evt.target.closest("th")
 
                 const currentHeader = dragleft ? targetColumn.previousElementSibling : targetColumn
                 const nextHeader = currentHeader.nextElementSibling
@@ -123,6 +127,8 @@ export default Vue.extend({
                 this.columns.forEach(n => {
                     this.$set(n, 'sortAscending', false)
                     this.$set(n, 'sortDescending', false)
+                    this.$set(n, 'sortAddAscending', false)
+                    this.$set(n, 'sortAddDescending', false)
                 })
                 if (descending)
                     this.$set(column, 'sortDescending', true)
@@ -130,6 +136,23 @@ export default Vue.extend({
                     this.$set(column, 'sortAscending', true)
                 const index = this.columns.findIndex(n => n == column)
                 this.$emit('on-column-click', index, descending)
+            }
+        },
+        onAddClick: function (column) {
+            if (!this.draggingReady && column.isAddSortable) {
+                const descending = column.sortAddAscending == true
+                this.columns.forEach(n => {
+                    this.$set(n, 'sortAscending', false)
+                    this.$set(n, 'sortDescending', false)
+                    this.$set(n, 'sortAddAscending', false)
+                    this.$set(n, 'sortAddDescending', false)
+                })
+                if (descending)
+                    this.$set(column, 'sortAddDescending', true)
+                else
+                    this.$set(column, 'sortAddAscending', true)
+                const index = this.columns.findIndex(n => n == column)
+                this.$emit('on-column-click', index, descending, true)
             }
         } 
     },
@@ -141,20 +164,23 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+    th .col {
+        display: flex;
+    }
+        th .col div {
+        text-overflow: ellipsis;
+    }
     tr th {
         overflow: hidden;
-        text-overflow: ellipsis;
         white-space: nowrap;
         user-select: none;
-        padding-left: 5px;
         text-align: left;
         font-weight: normal;
         color: var(--tablevue-selected-color);
-        background-color: var(--tablevue-selected-background-color);
+        background-color: var(--tablevue-selected-background-color);        
         border-left-color: var(--tablevue-columns-separator-color);
         border-left-style: solid;
         border-left-width: 1px;
-        transition: background-color 0.3s; 
     }
 
     tr th:first-child {
@@ -164,8 +190,17 @@ export default Vue.extend({
     tr.pointer-ew {
         cursor: ew-resize;
     }
+    .is-sortable {
+        background-color: var(--tablevue-selected-background-color);
+        transition: background-color 0.3s; 
+    }
     .is-sortable:hover {
         background-color: var(--tablevue-selected-background-hover-color);
+    }
+    .maincol {
+        flex-grow: 1;
+        padding-left: 5px;            
+        overflow: hidden;    
     }
     .sort-ascending:before {
         position: relative;

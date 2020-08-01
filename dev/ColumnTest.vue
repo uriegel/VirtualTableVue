@@ -1,7 +1,9 @@
 <template>
     <div class="container">
         <table>
-            <columns :columns='columns' :columnsWidths='columnsWidths' @on-columns-widths-changed='onColumnsWidthChanged'></columns>
+            <columns :columns='columns' :columnsWidths='columnsWidths' 
+                @on-columns-widths-changed='onColumnsWidthChanged'
+                @on-column-click='onColumnClick'></columns>
             <tbody>
                 <tr>
                     <td>Test</td>
@@ -41,7 +43,9 @@ export default Vue.extend({
         onChange: function () {
             this.columns = [{
                     name: "Name",
-                    isSortable: true
+                    add: "Erw.",
+                    isSortable: true,
+                    isAddSortable: true
                 }, {
                     name: "Größe",
                     isSortable: true
@@ -71,7 +75,11 @@ export default Vue.extend({
         },
         onColumnsWidthChanged: function(widths) {
             console.log("new columnsWidths", widths)
+        },
+        onColumnClick: function(index, descending, add) {
+            console.log("Click", index, descending, add)
         }
+
     },
     mounted: function() {
         this.columns = [{
