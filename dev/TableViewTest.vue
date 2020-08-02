@@ -3,7 +3,7 @@
         <h1>Table View Test</h1>
         <div class="container">
             <table-view :eventBus="tableEventBus" :columns='columns' :itemsSource='itemsSource' 
-                @selection-changed="onSelectionChanged" @action='onAction'>
+                @selection-changed="onSelectionChanged" @action='onAction' @column-click='onColumn'>
                 <template v-slot=row >
                     <tr :class="{ 'isCurrent': row.item.index == selectedIndex }">
                         <td>{{row.item.name}}</td>
@@ -40,6 +40,7 @@ export default Vue.extend({
             columns: [
                 {
                     name: "Name",
+                    subItem: "Ext",
                     isSortable: true,
                     width: "25%"
                 }, {
@@ -111,6 +112,9 @@ export default Vue.extend({
             link.media = 'all'
             head.appendChild(link)
             this.tableEventBus.$emit("themeChanged")
+        },
+        onColumn(col, desc, subItem) {
+            console.log("Column", col, desc, subItem)
         }
     },
     mounted() {

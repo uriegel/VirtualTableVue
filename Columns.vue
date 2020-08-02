@@ -5,8 +5,8 @@
                 <div class="col">
                     <div class="maincol" @click='onClick(column)'
                         :class="{'is-sortable': column.isSortable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">{{column.name}}</div>
-                    <div @click='onAddClick(column)' :class="{ 'is-sortable': column.isAddSortable, 'sort-ascending': column.sortAddAscending, 'sort-descending': column.sortAddDescending
-                        }">{{column.add}}</div>
+                    <div @click='onSubItemClick(column)' :class="{ 'is-sortable': column.subItem, 'sort-ascending': column.sortSubItemAscending, 'sort-descending': column.sortSubItemDescending
+                        }">{{column.subItem}}</div>
                 </div>                        
             </th>
         </tr>
@@ -127,30 +127,30 @@ export default Vue.extend({
                 this.columns.forEach(n => {
                     this.$set(n, 'sortAscending', false)
                     this.$set(n, 'sortDescending', false)
-                    this.$set(n, 'sortAddAscending', false)
-                    this.$set(n, 'sortAddDescending', false)
+                    this.$set(n, 'sortSubItemAscending', false)
+                    this.$set(n, 'sortSubItemDescending', false)
                 })
                 if (descending)
                     this.$set(column, 'sortDescending', true)
                 else
                     this.$set(column, 'sortAscending', true)
                 const index = this.columns.findIndex(n => n == column)
-                this.$emit('on-column-click', index, descending)
+                this.$emit('on-column-click', index, descending, false)
             }
         },
-        onAddClick: function (column) {
-            if (!this.draggingReady && column.isAddSortable) {
-                const descending = column.sortAddAscending == true
+        onSubItemClick: function (column) {
+            if (!this.draggingReady && column.subItem) {
+                const descending = column.sortSubItemAscending == true
                 this.columns.forEach(n => {
                     this.$set(n, 'sortAscending', false)
                     this.$set(n, 'sortDescending', false)
-                    this.$set(n, 'sortAddAscending', false)
-                    this.$set(n, 'sortAddDescending', false)
+                    this.$set(n, 'sortSubItemAscending', false)
+                    this.$set(n, 'sortSubItemDescending', false)
                 })
                 if (descending)
-                    this.$set(column, 'sortAddDescending', true)
+                    this.$set(column, 'sortSubItemDescending', true)
                 else
-                    this.$set(column, 'sortAddAscending', true)
+                    this.$set(column, 'sortSubItemAscending', true)
                 const index = this.columns.findIndex(n => n == column)
                 this.$emit('on-column-click', index, descending, true)
             }

@@ -43,9 +43,8 @@ export default Vue.extend({
         onChange: function () {
             this.columns = [{
                     name: "Name",
-                    add: "Erw.",
-                    isSortable: true,
-                    isAddSortable: true
+                    subItem: "Erw.",
+                    isSortable: true
                 }, {
                     name: "Größe",
                     isSortable: true
@@ -76,8 +75,8 @@ export default Vue.extend({
         onColumnsWidthChanged: function(widths) {
             console.log("new columnsWidths", widths)
         },
-        onColumnClick: function(index, descending, add) {
-            console.log("Click", index, descending, add)
+        onColumnClick: function(index, descending, subItem) {
+            console.log("Click", index, descending, subItem)
         }
 
     },
