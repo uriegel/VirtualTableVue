@@ -58,6 +58,7 @@ export default Vue.extend({
         itemsSource: {
             immediate: true,
             handler(newVal) {
+                this.position = 0
                 if (newVal.indexToSelect != -1)
                     this.setCurrentIndex(newVal.indexToSelect || 0) 
                 this.onResize()

@@ -83,25 +83,26 @@ export default Vue.extend({
             this.tableEventBus.$emit("focus")
             this.itemsSource = { count: items.length, getItems, indexToSelect: 80 }
         },
-        fillItems(count) {
-            this.items = []
-
-            async function getItems(startRange, endRange) {
-                console.log("getitems", startRange, endRange)
-                return await Array.from(Array(endRange - startRange).keys()).map((n, i) => {
+        onRestrict() {
+            const letters = ['c']
+            const items = letters.map(n => Array.from(Array(20).keys()).map(m => n + m)).flat() 
+            
+            function getItems(startRange, endRange) {
+                return items.slice(startRange, endRange).map((n, i) => {
                     return {
-                        name: `name ${i + startRange}`,
-                        extension: `extension ${i + startRange}`,
-                        date: `datum ${i + startRange}`,
-                        description: `description ${i + startRange}`,
-                        index: i + startRange
+                        name: n,
+                        extension: "extension",
+                        date: "datum",
+                        description: "description",
+                        index: i + startRange                        
                     }
                 })
             }
+
+            this.items = []
             this.tableEventBus.$emit("focus")
-            this.itemsSource = { count, getItems, indexToSelect: 9 }
+            this.itemsSource = { count: items.length, getItems, indexToSelect: 80 }
         },
-        onRestrict() {},
         onThemeChanged() {
             if (first) {
                 document.body.style.setProperty("font-size", "150%")
