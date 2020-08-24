@@ -57,11 +57,11 @@ export default Vue.extend({
     watch: {
         itemsSource: {
             immediate: true,
-            handler(newVal) {
+            async handler(newVal) {
                 this.position = 0
                 if (newVal.indexToSelect != -1)
                     this.setCurrentIndex(newVal.indexToSelect || 0) 
-                this.onResize()
+                await this.onResize()
                 this.$emit("selection-changed", this.index, this.displayItems[this.index - this.startIndex]) 
             }
         },
@@ -85,11 +85,11 @@ export default Vue.extend({
         onColumnsWidthChanged(widths) {
             this.$emit('columns-widths-changed', widths)
         },
-        onResize() {
+        async onResize() {
             if (this.$refs.list)
                 this.height = this.$refs.list.clientHeight - this.columnHeight
             this.itemsPerPage = this.itemHeight ? Math.floor(this.height / this.itemHeight) : 1
-            this.setPosition()
+            await this.setPosition()
         },
         onKeyDown(evt) {
             switch (evt.which) {
