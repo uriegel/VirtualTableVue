@@ -71,7 +71,7 @@ export default Vue.extend({
         index: {
             immediate: true,
             handler(newVal) { 
-                this.$emit("selection-changed", newVal) 
+                this.$emit("selection-changed", newVal, this.displayItems[newVal - this.startIndex]) 
             }
         },
     },

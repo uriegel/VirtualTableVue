@@ -65,7 +65,10 @@ export default Vue.extend({
         }
     },
     methods: {
-        onSelectionChanged(index) { this.selectedIndex = index },
+        onSelectionChanged(index, item) { 
+            this.selectedIndex = index
+            console.log("Selection changed", item) 
+        },
         onChange(evt) {
             const count = parseInt(evt.srcElement.value)
             this.fillItems(count)
