@@ -62,6 +62,7 @@ export default Vue.extend({
                 if (newVal.indexToSelect != -1)
                     this.setCurrentIndex(newVal.indexToSelect || 0) 
                 this.onResize()
+                this.$emit("selection-changed", this.index, this.displayItems[this.index - this.startIndex]) 
             }
         },
         position(newVal) { 
