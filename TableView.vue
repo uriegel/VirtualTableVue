@@ -3,7 +3,7 @@
         <table ref="table" @mousedown="onMouseDown" @dblclick='onDblClick' 
                 :class="{ 'scrollbar': itemsSource.count > itemsPerPage }">
             <columns :columns='columns' @onColumnHeight='onColumnHeight' :eventBus="columnsEventBus"
-                @on-columns-widths-changed='onColumnsWidthChanged' @on-column-click='onColumnClick'></columns>
+                @on-columns-widths-changed='onColumnsWidthChanged' @on-column-click='onColumnClick' @on-header-click='onColumnHeaderClick'></columns>
             <tbody ref="tbody">
                 <slot v-for="item in displayItems" :item="item"></slot>
             </tbody>
@@ -175,6 +175,9 @@ export default Vue.extend({
         }, 
         onColumnClick(index, descending, add) {
             this.$emit('column-click', index, descending, add)
+        },
+        onColumnHeaderClick(index) {
+            this.$emit('column-header-click', index)
         },
         onThemeChanged() {
             if (this.$refs.tbody.childNodes.length > 0) {

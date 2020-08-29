@@ -3,7 +3,8 @@
         <table>
             <columns :columns='columns' :columnsWidths='columnsWidths' 
                 @on-columns-widths-changed='onColumnsWidthChanged'
-                @on-column-click='onColumnClick'></columns>
+                @on-column-click='onColumnClick'
+                @on-header-click='onColumnHeaderClick'></columns>
             <tbody>
                 <tr>
                     <td>Test</td>
@@ -77,14 +78,17 @@ export default Vue.extend({
         },
         onColumnClick: function(index, descending, subItem) {
             console.log("Click", index, descending, subItem)
+        },
+        onColumnHeaderClick: function(index) {
+            console.log("Header Click", index)
         }
-
     },
     mounted: function() {
         this.columns = [{
                 name: "Name"
             }, {
-                name: "Erw."
+                name: "Erw.",
+                img: "./trace.svg"
             }, {
                 name: "Datum"
             }

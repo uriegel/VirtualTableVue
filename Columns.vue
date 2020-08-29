@@ -3,6 +3,7 @@
         <tr ref='tr' :class="{'pointer-ew': draggingReady }">
             <th v-for="column in columns" :key="column.name" @mousemove='onMouseMove' @mousedown='onMouseDown' @dblclick.stop='() => {}'>
                 <div class="col">
+                    <img :src="column.img" class="colimg" v-if="column.img">
                     <div class="maincol" @click='onClick(column)'
                         :class="{'is-sortable': column.isSortable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">{{column.name}}</div>
                     <div @click='onSubItemClick(column)' :class="{ 'is-sortable': column.subItem, 'sort-ascending': column.sortSubItemAscending, 'sort-descending': column.sortSubItemDescending
@@ -41,14 +42,17 @@ export default Vue.extend({
     methods: {
         onMouseMove: function (evt) {
             const th = evt.target
-            const thWidth = th.clientWidth + th.clientLeft
-            const mouseX = evt.offsetX + th.clientLeft
-            const trRect = (this.$refs.tr).getBoundingClientRect()
-            const absoluteRight = trRect.width + trRect.x
-
-            this.draggingReady = (mouseX < 3 || mouseX > thWidth - 4) 
-                && (evt.pageX - trRect.x > 4)
-                && (evt.pageX < absoluteRight - 4)
+            if (th.nodeName == "TH") {
+                const thWidth = th.clientWidth + th.clientLeft
+                const mouseX = evt.offsetX + th.clientLeft
+                const trRect = (this.$refs.tr).getBoundingClientRect()
+                const absoluteRight = trRect.width + trRect.x
+                this.draggingReady = (mouseX < 3 || mouseX > thWidth - 4) 
+                    && (evt.pageX - trRect.x > 4)
+                    && (evt.pageX < absoluteRight - 4)
+            }
+            else
+                this.draggingReady = false
         },
         onMouseDown: function (evt) {
             if (this.draggingReady) {
@@ -122,20 +126,23 @@ export default Vue.extend({
             }
         },
         onClick: function (column) {
-            if (!this.draggingReady && column.isSortable) {
-                const descending = column.sortAscending == true
-                this.columns.forEach(n => {
-                    this.$set(n, 'sortAscending', false)
-                    this.$set(n, 'sortDescending', false)
-                    this.$set(n, 'sortSubItemAscending', false)
-                    this.$set(n, 'sortSubItemDescending', false)
-                })
-                if (descending)
-                    this.$set(column, 'sortDescending', true)
-                else
-                    this.$set(column, 'sortAscending', true)
+            if (!this.draggingReady) {
                 const index = this.columns.findIndex(n => n == column)
-                this.$emit('on-column-click', index, descending, false)
+                if (column.isSortable) {
+                    const descending = column.sortAscending == true
+                    this.columns.forEach(n => {
+                        this.$set(n, 'sortAscending', false)
+                        this.$set(n, 'sortDescending', false)
+                        this.$set(n, 'sortSubItemAscending', false)
+                        this.$set(n, 'sortSubItemDescending', false)
+                    })
+                    if (descending)
+                        this.$set(column, 'sortDescending', true)
+                    else
+                        this.$set(column, 'sortAscending', true)
+                    this.$emit('on-column-click', index, descending, false)
+                } else 
+                    this.$emit('on-header-click', index)
             }
         },
         onSubItemClick: function (column) {
@@ -219,5 +226,9 @@ export default Vue.extend({
         border-top: 6px solid var(--tablevue-selected-color);
         content: '';
         margin-right: 5px;
+    }
+    .colimg {
+        width: 16px;
+        height: 16px;
     }
 </style>
