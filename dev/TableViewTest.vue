@@ -3,7 +3,7 @@
         <h1>Table View Test</h1>
         <div class="container">
             <table-view :eventBus="tableEventBus" :columns='columns' :itemsSource='itemsSource' 
-                @selection-changed="onSelectionChanged" @action='onAction' @column-click='onColumn'>
+                @selection-changed="onSelectionChanged" @action='onAction' @column-click='onColumn' @column-header-click='onColumnHeader'>
                 <template v-slot=row >
                     <tr :class="{ 'isCurrent': row.item.index == selectedIndex }">
                         <td>{{row.item.name}}</td>
@@ -53,7 +53,9 @@ export default Vue.extend({
                     width: "21.2687%"
                 }, {
                     name: "Beschreibung",
-                    width: "18.3009%"
+                    width: "18.3009%",
+                    img: "./trace.svg",
+                    isClickable: true
                 }
             ],
             itemsSource: { count: 0, getItems: async () => await [], indexToSelect: 0}
@@ -118,6 +120,9 @@ export default Vue.extend({
         },
         onColumn(col, desc, subItem) {
             console.log("Column", col, desc, subItem)
+        },
+        onColumnHeader(col) {
+            console.log("Column header", col)
         }
     },
     mounted() {

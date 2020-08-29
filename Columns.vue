@@ -5,7 +5,7 @@
                 <div class="col">
                     <img :src="column.img" class="colimg" v-if="column.img">
                     <div class="maincol" @click='onClick(column)'
-                        :class="{'is-sortable': column.isSortable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">{{column.name}}</div>
+                        :class="{'is-sortable': column.isSortable || column.isClickable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">{{column.name}}</div>
                     <div @click='onSubItemClick(column)' :class="{ 'is-sortable': column.subItem, 'sort-ascending': column.sortSubItemAscending, 'sort-descending': column.sortSubItemDescending
                         }">{{column.subItem}}</div>
                 </div>                        
@@ -141,7 +141,7 @@ export default Vue.extend({
                     else
                         this.$set(column, 'sortAscending', true)
                     this.$emit('on-column-click', index, descending, false)
-                } else 
+                } else if (column.isClickable)
                     this.$emit('on-header-click', index)
             }
         },
