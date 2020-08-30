@@ -6,16 +6,16 @@
                 @selection-changed="onSelectionChanged" @action='onAction' @column-click='onColumn' @column-header-click='onColumnHeader'>
                 <template v-slot:col0>
                     <img class="img" src="../trace.svg">
-                    Hallo
+                    <span class="col">Hallo</span>
                 </template>
                 <template v-slot:col1 class="is-sortable">
-                    Du
+                    <div class="col">Du</div>
                 </template>
                 <template v-slot:col2>
-                    Da
+                    <span class="col">Da</span>
                 </template>
                 <template v-slot:col3>
-                    Ende
+                    <span class="col">Ende</span>
                 </template>
 
                 <template v-slot=row >
@@ -224,5 +224,10 @@ body {
 .img {
     width:16px;
 }
-
+.col {
+    flex-grow: 1;
+    padding-left: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>

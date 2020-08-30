@@ -7,9 +7,6 @@
                     <div class="maincol" @click='onClick(column)' v-if="column.name"
                         :class="{'is-sortable': column.isSortable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">{{column.name}}
                     </div>
-                    <div @click='onSubItemClick(column)' :class="{ 'is-sortable': column.subItem, 'sort-ascending': column.sortSubItemAscending, 'sort-descending': column.sortSubItemDescending
-                        }">{{column.subItem}}
-                    </div>
                 </div>                        
             </th>
         </tr>
@@ -176,10 +173,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-    th .col {
-        display: flex;
-    }
-        th .col div {
+    th .col div {
         text-overflow: ellipsis;
     }
     tr th {
