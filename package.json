@@ -7,6 +7,7 @@
     "Columns": "vue serve ./dev/ColumnTest.vue",
     "Scrollbar": "vue serve ./dev/ScrollbarTest.vue",
     "TableView": "vue serve ./dev/TableViewTest.vue",
+    "TableViewColumns": "vue serve ./dev/TableViewColumnsTest.vue",
     "TableViewRestrict": "vue serve ./dev/TableViewRestrictTest.vue",
     "TableViewChanging": "vue serve ./dev/TableViewChangingTest.vue"
   },

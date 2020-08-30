@@ -1,13 +1,15 @@
 <template>
     <thead>
         <tr ref='tr' :class="{'pointer-ew': draggingReady }">
-            <th v-for="column in columns" :key="column.name" @mousemove='onMouseMove' @mousedown='onMouseDown' @dblclick.stop='() => {}'>
-                <div class="col">
-                    <img :src="column.img" class="colimg" v-if="column.img">
-                    <div class="maincol" @click='onClick(column)'
-                        :class="{'is-sortable': column.isSortable || column.isClickable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">{{column.name}}</div>
+            <th v-for="(column, index) in columns" :key="column.name" @mousemove='onMouseMove' @mousedown='onMouseDown' @dblclick.stop='() => {}'>
+                <div class="col" :class="{'is-sortable': column.isClickable}" @click='onSlotClick(column, index)'>
+                    <slot :name="'col' + index"></slot>
+                    <div class="maincol" @click='onClick(column)' v-if="column.name"
+                        :class="{'is-sortable': column.isSortable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">{{column.name}}
+                    </div>
                     <div @click='onSubItemClick(column)' :class="{ 'is-sortable': column.subItem, 'sort-ascending': column.sortSubItemAscending, 'sort-descending': column.sortSubItemDescending
-                        }">{{column.subItem}}</div>
+                        }">{{column.subItem}}
+                    </div>
                 </div>                        
             </th>
         </tr>
@@ -141,9 +143,12 @@ export default Vue.extend({
                     else
                         this.$set(column, 'sortAscending', true)
                     this.$emit('on-column-click', index, descending, false)
-                } else if (column.isClickable)
-                    this.$emit('on-header-click', index)
+                }
             }
+        },
+        onSlotClick: function(column, index) {
+            if (column.isClickable)
+                this.$emit('on-column-click', index)
         },
         onSubItemClick: function (column) {
             if (!this.draggingReady && column.subItem) {

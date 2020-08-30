@@ -4,7 +4,18 @@
             <columns :columns='columns' :columnsWidths='columnsWidths' 
                 @on-columns-widths-changed='onColumnsWidthChanged'
                 @on-column-click='onColumnClick'
-                @on-header-click='onColumnHeaderClick'></columns>
+                @on-header-click='onColumnHeaderClick'>
+                <template v-slot:col0>
+                    <img class="img" src="../trace.svg">
+                    Hallo
+                </template>
+                <template v-slot:col1 class="is-sortable">
+                    <div class="is-sortable">Du</div>
+                </template>
+                <template v-slot:col2>
+                    Da
+                </template>
+            </columns>
             <tbody>
                 <tr>
                     <td>Test</td>
@@ -85,12 +96,9 @@ export default Vue.extend({
     },
     mounted: function() {
         this.columns = [{
-                name: "Name"
+                isClickable: true
             }, {
-                name: "Erw.",
-                img: "./trace.svg"
             }, {
-                name: "Datum"
             }
         ]
     }
@@ -112,6 +120,15 @@ body {
     padding: 0px;
     display: flex;
 }
+
+.is-sortable {
+    background-color: yellow;
+    transition: background-color 0.3s; 
+}
+.is-sortable:hover {
+    background-color: var(--tablevue-selected-background-hover-color);
+}
+
 </style>  
 
 <style scoped>
@@ -131,6 +148,10 @@ body {
         text-overflow: ellipsis;
         white-space: nowrap;
         user-select: none;
+    }
+
+    .img {
+        width:16px;
     }
 </style>
 

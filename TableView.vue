@@ -3,7 +3,11 @@
         <table ref="table" @mousedown="onMouseDown" @dblclick='onDblClick' 
                 :class="{ 'scrollbar': itemsSource.count > itemsPerPage }">
             <columns :columns='columns' @onColumnHeight='onColumnHeight' :eventBus="columnsEventBus"
-                @on-columns-widths-changed='onColumnsWidthChanged' @on-column-click='onColumnClick' @on-header-click='onColumnHeaderClick'></columns>
+                @on-columns-widths-changed='onColumnsWidthChanged' @on-column-click='onColumnClick' @on-header-click='onColumnHeaderClick'>
+                <template v-for="(column, index) in columns" v-slot:[getSlotName(index)]>
+                    <slot :name="getSlotName(index)"></slot>
+                </template>            
+            </columns>
             <tbody ref="tbody">
                 <slot v-for="item in displayItems" :item="item"></slot>
             </tbody>
@@ -62,7 +66,7 @@ export default Vue.extend({
                 if (newVal.indexToSelect != -1)
                     this.setCurrentIndex(newVal.indexToSelect || 0) 
                 await this.onResize()
-                const selectedItem = this.displayItems[this.index - this.startIndex]
+                //const selectedItem = this.displayItems[this.index - this.startIndex]
                 setTimeout(() => this.$emit("selection-changed", this.index, this.displayItems[this.index - this.startIndex]))
             }
         },
@@ -91,6 +95,9 @@ export default Vue.extend({
                 this.height = this.$refs.list.clientHeight - this.columnHeight
             this.itemsPerPage = this.itemHeight ? Math.floor(this.height / this.itemHeight) : 1
             await this.setPosition()
+        },
+        getSlotName(index) { 
+            return "col" + index
         },
         onKeyDown(evt) {
             switch (evt.which) {
