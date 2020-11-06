@@ -39,7 +39,8 @@ export default Vue.extend({
                 {
                     name: "Name",
                     isSortable: true,
-                    width: "25%"
+                    width: "25%",
+                    subItem: "Erwin"
                 }, {
                     name: "Größe",
                     isSortable: true,

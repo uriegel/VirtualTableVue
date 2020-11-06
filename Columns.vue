@@ -2,11 +2,14 @@
     <thead>
         <tr ref='tr' :class="{'pointer-ew': draggingReady }">
             <th v-for="(column, index) in columns" :key="column.name" @mousemove='onMouseMove' @mousedown='onMouseDown' @dblclick.stop='() => {}'>
-                <div class="col" :class="{'is-sortable': column.isClickable}" @click='onSlotClick(column, index)'>
+                <div class="col" :class="{'is-sortable': column.isClickable, 'subItem': column.subItem}" @click='onSlotClick(column, index)'>
                     <slot :name="'col' + index"></slot>
                     <div class="maincol" @click='onClick(column)' v-if="column.name"
                         :class="{'is-sortable': column.isSortable, 'sort-ascending': column.sortAscending, 'sort-descending': column.sortDescending}">{{column.name}}
                     </div>
+                    <div @click='onSubItemClick(column)' :class="{ 'is-sortable': column.subItem, 'sort-ascending': column.sortSubItemAscending, 'sort-descending': column.sortSubItemDescending	
+                        }">{{column.subItem}}	
+                    </div>                    
                 </div>                        
             </th>
         </tr>
@@ -202,6 +205,10 @@ export default Vue.extend({
     }
     .is-sortable:hover {
         background-color: var(--tablevue-selected-background-hover-color);
+    }
+    .subItem {
+        display: flex;
+        flex-direction: row;
     }
     .maincol {
         flex-grow: 1;
