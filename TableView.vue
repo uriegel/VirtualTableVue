@@ -189,12 +189,12 @@ export default Vue.extend({
         onThemeChanged() {
             if (this.$refs.tbody.childNodes.length > 0) {
                 const tr = this.$refs.tbody.childNodes[0]
-                this.itemHeight = tr.clientHeight
+                this.itemHeight = tr.getBoundingClientRect().height
             }   
             else {
                 const observer = new MutationObserver((mutationsList, observer) => {
                     let tr = mutationsList[0].addedNodes[0]
-                    this.itemHeight = tr.clientHeight
+                    this.itemHeight = tr.getBoundingClientRect().height
                     observer.disconnect()
                     this.onResize()
                 });
@@ -214,7 +214,7 @@ export default Vue.extend({
     mounted() {
         const observer = new MutationObserver((mutationsList, observer) => {
             let tr = mutationsList[0].addedNodes[0]
-            this.itemHeight = tr.clientHeight
+            this.itemHeight = tr.getBoundingClientRect().height
             observer.disconnect()
             this.onResize()
         });
