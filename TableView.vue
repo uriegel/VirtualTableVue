@@ -203,7 +203,7 @@ export default Vue.extend({
             this.columnsEventBus.$emit("themeChanged")
             this.scrollbarEventBus.$emit("refresh")
             this.onResize()
-        } 
+        }
     },
     created() {
         window.addEventListener("resize", this.onResize)
@@ -224,6 +224,7 @@ export default Vue.extend({
         this.eventBus.$on('setCurrentIndex', this.setCurrentIndex)
         this.eventBus.$on('resize', this.onResize)
         this.eventBus.$on('themeChanged', this.onThemeChanged)
+        this.eventBus.$on('refreshView', this.setPosition)
         this.onResize()
     }
 })
