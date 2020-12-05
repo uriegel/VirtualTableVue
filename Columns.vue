@@ -169,8 +169,8 @@ export default Vue.extend({
         } 
     },
     mounted() {
-        this.eventBus.$on('themeChanged', () => this.$emit('onColumnHeight', this.$el.clientHeight))
-        this.$emit('onColumnHeight', this.$el.clientHeight)
+        this.eventBus.$on('themeChanged', () => this.$emit('onColumnHeight', this.$el.getBoundingClientRect().height))
+        this.$emit('onColumnHeight', this.$el.getBoundingClientRect().height)
     }
 })
 </script>
