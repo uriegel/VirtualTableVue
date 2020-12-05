@@ -225,6 +225,7 @@ export default Vue.extend({
         this.eventBus.$on('resize', this.onResize)
         this.eventBus.$on('themeChanged', this.onThemeChanged)
         this.eventBus.$on('refreshView', this.setPosition)
+        this.eventBus.$on('downOne', this.downOne)
         this.onResize()
     }
 })
