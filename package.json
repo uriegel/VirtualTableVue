@@ -1,6 +1,6 @@
 {
   "name": "virtual-table-vue",
-  "version": "5.1.2",
+  "version": "5.2.0",
   "description": "A virtual list view implementation with multiple columns",
   "main": "index.js",
   "scripts": {
