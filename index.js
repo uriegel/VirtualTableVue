@@ -5,8 +5,9 @@ export default {
         // Let's register our component globally
         // https://vuejs.org/v2/guide/components-registration.html
         Vue.component("table-view", TableView)
-    },
-    showDialog: function(test) {
-        alert(test)
     }
+}
+
+export function showDialog(test) {
+    alert(test)
 }
