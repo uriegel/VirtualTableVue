@@ -8,6 +8,3 @@ export default {
     }
 }
 
-export function showDialog(test) {
-    alert(test)
-}

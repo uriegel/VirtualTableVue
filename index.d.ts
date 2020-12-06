@@ -1,7 +1,6 @@
 declare module 'virtual-table-vue' {
     import { PluginFunction } from "vue"
     export const install: PluginFunction<{}>
-    export const showDialog: (test: string)=>void
 
     interface Column {
         name: string
